@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160308212155) do
+ActiveRecord::Schema.define(version: 20160308212845) do
 
   create_table "favored", force: :cascade do |t|
     t.string   "name"
@@ -61,5 +61,27 @@ ActiveRecord::Schema.define(version: 20160308212155) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "transactions", force: :cascade do |t|
+    t.decimal  "value"
+    t.date     "date"
+    t.integer  "superior_organ_id"
+    t.integer  "subordinated_organ_id"
+    t.integer  "management_unit_id"
+    t.integer  "source_id"
+    t.integer  "person_id"
+    t.integer  "favored_id"
+    t.integer  "transaction_type_id"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "transactions", ["favored_id"], name: "index_transactions_on_favored_id"
+  add_index "transactions", ["management_unit_id"], name: "index_transactions_on_management_unit_id"
+  add_index "transactions", ["person_id"], name: "index_transactions_on_person_id"
+  add_index "transactions", ["source_id"], name: "index_transactions_on_source_id"
+  add_index "transactions", ["subordinated_organ_id"], name: "index_transactions_on_subordinated_organ_id"
+  add_index "transactions", ["superior_organ_id"], name: "index_transactions_on_superior_organ_id"
+  add_index "transactions", ["transaction_type_id"], name: "index_transactions_on_transaction_type_id"
 
 end
