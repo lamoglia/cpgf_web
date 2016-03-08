@@ -14,74 +14,74 @@
 ActiveRecord::Schema.define(version: 20160308212845) do
 
   create_table "favored", force: :cascade do |t|
-    t.string   "name"
-    t.string   "masked_document"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.string   "name",            limit: 255
+    t.string   "masked_document", limit: 255
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   create_table "management_units", force: :cascade do |t|
-    t.string   "code"
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "code",       limit: 255
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "people", force: :cascade do |t|
-    t.string   "name"
-    t.string   "masked_document"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.string   "name",            limit: 255
+    t.string   "masked_document", limit: 255
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   create_table "sources", force: :cascade do |t|
-    t.string   "file_name"
+    t.string   "file_name",   limit: 255
     t.date     "reference"
     t.datetime "imported_at"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "subordinated_organs", force: :cascade do |t|
-    t.string   "code"
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "code",       limit: 255
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "superior_organs", force: :cascade do |t|
-    t.string   "code"
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "code",       limit: 255
+    t.string   "name",       limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "transaction_types", force: :cascade do |t|
-    t.string   "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string   "description", limit: 255
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "transactions", force: :cascade do |t|
-    t.decimal  "value"
+    t.decimal  "value",                           precision: 10
     t.date     "date"
-    t.integer  "superior_organ_id"
-    t.integer  "subordinated_organ_id"
-    t.integer  "management_unit_id"
-    t.integer  "source_id"
-    t.integer  "person_id"
-    t.integer  "favored_id"
-    t.integer  "transaction_type_id"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.integer  "superior_organ_id",     limit: 4
+    t.integer  "subordinated_organ_id", limit: 4
+    t.integer  "management_unit_id",    limit: 4
+    t.integer  "source_id",             limit: 4
+    t.integer  "person_id",             limit: 4
+    t.integer  "favored_id",            limit: 4
+    t.integer  "transaction_type_id",   limit: 4
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
   end
 
-  add_index "transactions", ["favored_id"], name: "index_transactions_on_favored_id"
-  add_index "transactions", ["management_unit_id"], name: "index_transactions_on_management_unit_id"
-  add_index "transactions", ["person_id"], name: "index_transactions_on_person_id"
-  add_index "transactions", ["source_id"], name: "index_transactions_on_source_id"
-  add_index "transactions", ["subordinated_organ_id"], name: "index_transactions_on_subordinated_organ_id"
-  add_index "transactions", ["superior_organ_id"], name: "index_transactions_on_superior_organ_id"
-  add_index "transactions", ["transaction_type_id"], name: "index_transactions_on_transaction_type_id"
+  add_index "transactions", ["favored_id"], name: "index_transactions_on_favored_id", using: :btree
+  add_index "transactions", ["management_unit_id"], name: "index_transactions_on_management_unit_id", using: :btree
+  add_index "transactions", ["person_id"], name: "index_transactions_on_person_id", using: :btree
+  add_index "transactions", ["source_id"], name: "index_transactions_on_source_id", using: :btree
+  add_index "transactions", ["subordinated_organ_id"], name: "index_transactions_on_subordinated_organ_id", using: :btree
+  add_index "transactions", ["superior_organ_id"], name: "index_transactions_on_superior_organ_id", using: :btree
+  add_index "transactions", ["transaction_type_id"], name: "index_transactions_on_transaction_type_id", using: :btree
 
 end
