@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160308212845) do
+ActiveRecord::Schema.define(version: 20160309030929) do
 
   create_table "favored", force: :cascade do |t|
     t.string   "name",            limit: 255
@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 20160308212845) do
   end
 
   create_table "transactions", force: :cascade do |t|
-    t.decimal  "value",                           precision: 10
+    t.decimal  "value",                           precision: 15, scale: 2, null: false
     t.date     "date"
     t.integer  "superior_organ_id",     limit: 4
     t.integer  "subordinated_organ_id", limit: 4
@@ -72,8 +72,8 @@ ActiveRecord::Schema.define(version: 20160308212845) do
     t.integer  "person_id",             limit: 4
     t.integer  "favored_id",            limit: 4
     t.integer  "transaction_type_id",   limit: 4
-    t.datetime "created_at",                                     null: false
-    t.datetime "updated_at",                                     null: false
+    t.datetime "created_at",                                               null: false
+    t.datetime "updated_at",                                               null: false
   end
 
   add_index "transactions", ["favored_id"], name: "index_transactions_on_favored_id", using: :btree
