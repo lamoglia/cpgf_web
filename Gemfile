@@ -27,6 +27,8 @@ gem 'bootstrap-sass'
 # Highcharts
 gem 'lazy_high_charts'
 
+gem 'react-rails'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
