@@ -5,12 +5,36 @@ class ApplicationController < ActionController::Base
 
   def index
     @yearly_total_chart = build_yearly_total_chart();
+
+    @summary_by_favored = build_summary_by_favored();
+    @summary_by_person = build_summary_by_person();
     @total_by_superior_organ_chart = build_total_by_superior_organ_chart();
     @total_by_person_chart = build_total_by_person_chart();
     @total_by_favored_chart = build_total_by_favored_chart();
   end
 
   private
+
+     def build_summary_by_favored()
+      values = Array.new
+      Transaction.select("favored_id, sum(value) as total").group("favored_id").order("total DESC").limit(10).each do | rec |
+        favored = Favored.find(rec.favored_id)
+        values << {label: favored.name, value: ActiveSupport::NumberHelper.number_to_currency(rec.total.to_f, unit: 'R$')}
+      end
+
+      return values
+    end
+
+    def build_summary_by_person()
+      values = Array.new
+      Transaction.select("person_id, sum(value) as total").group("person_id").order("total DESC").limit(10).each do | rec |
+        person = Person.find(rec.person_id)
+        values << {label: person.name, value: ActiveSupport::NumberHelper.number_to_currency(rec.total.to_f, unit: 'R$')}
+      end
+
+      return values
+    end
+
     def build_yearly_total_chart()
       today = Date.today
       current_date = Date.new(2010, 1, 1)
@@ -33,21 +57,27 @@ class ApplicationController < ActionController::Base
     end
 
     def build_total_by_superior_organ_chart()
-      superior_organs = SuperiorOrgan.all
-
       superior_organs_total = Array.new
-      superior_organs.each do |organ|
-        superior_organs_total << Transaction.where(:superior_organ => organ).sum(:value).to_f;
+      sum = 0
+
+      total = Transaction.sum('value');
+      Transaction.select("superior_organ_id, sum(value) as total").group("superior_organ_id").order("total DESC").limit(10).each do | rec |
+        superior_organ = SuperiorOrgan.find(rec.superior_organ_id)
+        superior_organs_total << [superior_organ.name, rec.total.to_f];
+        sum += rec.total.to_f
+
+        if (sum > total/1.2) then
+          superior_organs_total << ['OUTROS', (total - sum).to_f];
+          break
+        end
       end
 
-      LazyHighCharts::HighChart.new('graph') do |f|
+      LazyHighCharts::HighChart.new('pie') do |f|
         f.title(text: "Gasto total por Órgão Superior")
-        f.xAxis(categories: superior_organs.collect {|t| t.name})
-        f.yAxis(min: 0, title: nil)
-        f.series(name: "Gasto total", data: superior_organs_total)
+        f.series(name: "Gasto por Órgãos Superior", data: superior_organs_total)
 
         f.legend(verticalAlign: 'bottom', horizontalAlign: 'right', layout: 'horizontal')
-        f.chart({type: "bar", height: 800})
+        f.chart({type: "pie"})
       end
     end
 

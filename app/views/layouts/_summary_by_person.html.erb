@@ -1,0 +1,18 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th class="col-xs-8">Descrição</th>
+        <th class="col-xs-4">Valor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% data.each do |d| %>
+        <tr>
+          <td><%= d[:label].nil?? 'Não informado': d[:label] %></td>
+          <td class="right"><%= d[:value] %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
