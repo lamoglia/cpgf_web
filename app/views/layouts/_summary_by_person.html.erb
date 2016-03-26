@@ -9,7 +9,7 @@
     <tbody>
       <% data.each do |d| %>
         <tr>
-          <td><%= d[:label].nil?? 'Não informado': d[:label] %></td>
+          <td class="summary-label" title="<%= d[:label].nil?? 'Não informado': d[:label] %>"><%= d[:label].nil?? 'Não informado': d[:label] %></td>
           <td class="right"><%= d[:value] %></td>
         </tr>
       <% end %>
