@@ -9,8 +9,6 @@ class ApplicationController < ActionController::Base
     @summary_by_favored = build_summary_by_favored();
     @summary_by_person = build_summary_by_person();
     @total_by_superior_organ_chart = build_total_by_superior_organ_chart();
-    @total_by_person_chart = build_total_by_person_chart();
-    @total_by_favored_chart = build_total_by_favored_chart();
   end
 
   private
@@ -46,7 +44,7 @@ class ApplicationController < ActionController::Base
       end
 
       LazyHighCharts::HighChart.new('graph') do |f|
-        f.title(text: "Gasto total por ano")
+        f.title(text: "Gasto por ano")
         f.xAxis(categories: (2010..2016).to_a)
         f.yAxis(min: 0, title: nil)
         f.series(name: "Gasto total", data: yearly_total)
@@ -73,55 +71,11 @@ class ApplicationController < ActionController::Base
       end
 
       LazyHighCharts::HighChart.new('pie') do |f|
-        f.title(text: "Gasto total por Órgão Superior")
+        f.title(text: "Gasto por Órgão Superior")
         f.series(name: "Gasto por Órgãos Superior", data: superior_organs_total)
 
         f.legend(verticalAlign: 'bottom', horizontalAlign: 'right', layout: 'horizontal')
         f.chart({type: "pie"})
-      end
-    end
-
-    def build_total_by_person_chart()
-      people_names = Array.new
-      people_totals = Array.new
-      Transaction.select("person_id, sum(value) as total").group("person_id").order("total DESC").limit(11).each do | rec |
-        person = Person.find(rec.person_id)
-        if !person.name.nil?
-          people_names << person.name
-          people_totals << rec.total.to_f
-        end
-      end
-
-      LazyHighCharts::HighChart.new('graph') do |f|
-        f.title(text: "Gasto total por Portador")
-        f.xAxis(categories: people_names)
-        f.yAxis(min: 0, title: nil)
-        f.series(name: "Gasto total", data: people_totals)
-
-        f.legend(verticalAlign: 'bottom', horizontalAlign: 'right', layout: 'horizontal')
-        f.chart({type: "bar"})
-      end
-    end
-
-    def build_total_by_favored_chart()
-      favored_names = Array.new
-      favored_totals = Array.new
-      Transaction.select("favored_id, sum(value) as total").group("favored_id").order("total DESC").limit(11).each do | rec |
-        favored = Favored.find(rec.favored_id)
-        if !favored.name.nil?
-          favored_names << favored.name
-          favored_totals << rec.total.to_f
-        end
-      end
-
-      LazyHighCharts::HighChart.new('graph') do |f|
-        f.title(text: "Gasto total por Favorecido")
-        f.xAxis(categories: favored_names)
-        f.yAxis(min: 0, title: nil)
-        f.series(name: "Gasto total", data: favored_totals)
-
-        f.legend(verticalAlign: 'bottom', horizontalAlign: 'right', layout: 'horizontal')
-        f.chart({type: "bar"})
       end
     end
 end
