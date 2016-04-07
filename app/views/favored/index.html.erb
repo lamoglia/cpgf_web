@@ -1,3 +1,21 @@
 <h2>Gastos por favorecido</br><small>Cartão de Pagamento do Governo Federal</small></h2>
 </br>
-<p></p>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th class="col-sm-9">Nome</th>
+      <th class="col-sm-3">Documento de identificação</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @favored.each do |fav| %>
+        <tr>
+            <td><%= fav.name.nil?? 'NÃO INFORMADO': fav.name %></td>
+            <td><%= fav.masked_document %></td>
+        </tr>
+    <% end %>   
+  </tbody>
+</table>
+<div class="digg_pagination">
+  <%= will_paginate @favored, :container => false %>
+</div>
