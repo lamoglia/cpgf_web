@@ -4,5 +4,6 @@ class PeopleController < ApplicationController
   protect_from_forgery with: :exception
 
 	def index
+    @people = Person.paginate(:page => params[:page], :per_page => 15).order('name')
 	end
 end

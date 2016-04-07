@@ -1,3 +1,22 @@
-<h2>Gastos por portador</br><small>Cartão de Pagamento do Governo Federal</small></h2>
+<h2>Portadores</br><small>Cartão de Pagamento do Governo Federal</small></h2>
 </br>
 <p></p>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th class="col-sm-9">Nome</th>
+      <th class="col-sm-3">Documento de identificação</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @people.each do |person| %>
+        <tr>
+            <td><%= person.name.nil?? 'NÃO INFORMADO': person.name %></td>
+            <td><%= person.masked_document %></td>
+        </tr>
+    <% end %>   
+  </tbody>
+</table>
+<div class="digg_pagination">
+  <%= will_paginate @people, :container => false %>
+</div>
