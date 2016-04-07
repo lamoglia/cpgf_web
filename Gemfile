@@ -29,6 +29,7 @@ gem 'lazy_high_charts'
 
 gem 'react-rails'
 
+gem 'will_paginate'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
