@@ -4,8 +4,9 @@
 <table class="table table-hover">
   <thead>
     <tr>
-      <th class="col-sm-9">Nome</th>
+      <th class="col-sm-7">Nome</th>
       <th class="col-sm-3">Documento de identificação</th>
+      <th class="col-sm-2">Total gasto</th>
     </tr>
   </thead>
   <tbody>
@@ -13,6 +14,7 @@
         <tr>
             <td><%= person.name.nil?? 'NÃO INFORMADO': person.name %></td>
             <td><%= person.masked_document %></td>
+            <td><%= person.total %></td>
         </tr>
     <% end %>   
   </tbody>

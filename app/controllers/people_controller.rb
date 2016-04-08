@@ -4,6 +4,10 @@ class PeopleController < ApplicationController
   protect_from_forgery with: :exception
 
 	def index
-    @people = Person.paginate(:page => params[:page], :per_page => 15).order('name')
+    @people = Person.joins("left join transactions on transactions.person_id = people.id")
+                  .select("people.*, sum(transactions.value) as total")
+                  .group("people.id")
+                  .paginate(:page => params[:page], :per_page => 15)
+                  .order('total desc')
 	end
 end

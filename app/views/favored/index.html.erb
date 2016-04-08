@@ -3,15 +3,17 @@
 <table class="table table-hover">
   <thead>
     <tr>
-      <th class="col-sm-9">Nome</th>
+      <th class="col-sm-7">Nome</th>
       <th class="col-sm-3">Documento de identificação</th>
+      <th class="col-sm-2">Total recebido</th>
     </tr>
   </thead>
   <tbody>
     <% @favored.each do |fav| %>
         <tr>
-            <td><%= fav.name.nil?? 'NÃO INFORMADO': fav.name %></td>
+            <td title="<%= fav.name %>"><%= fav.name.nil?? 'NÃO INFORMADO': fav.name %></td>
             <td><%= fav.masked_document %></td>
+            <td><%= fav.total %></td>
         </tr>
     <% end %>   
   </tbody>

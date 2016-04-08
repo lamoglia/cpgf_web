@@ -13,7 +13,7 @@
   <tbody>
     <% @transactions.each do |transaction| %>
         <tr>
-            <td><%= transaction.date %></td>
+            <td><%= transaction.date.strftime("%d/%m/%Y") %></td>
             <td><%= transaction.person_name.nil?? 'NÃO INFORMADO': transaction.person_name %></td>
             <td><%= transaction.favored_name.nil?? 'NÃO INFORMADO': transaction.favored_name %></td>
             <td><%= transaction.value %></td>
