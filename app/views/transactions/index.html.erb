@@ -1,0 +1,26 @@
+<h2>Transações</br><small>Cartão de Pagamento do Governo Federal</small></h2>
+</br>
+<p></p>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th class="col-sm-1">Data</th>
+      <th class="col-sm-4">Portador</th>
+      <th class="col-sm-5">Favorecido</th>
+      <th class="col-sm-2">Valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @transactions.each do |transaction| %>
+        <tr>
+            <td><%= transaction.date %></td>
+            <td><%= transaction.person_name.nil?? 'NÃO INFORMADO': transaction.person_name %></td>
+            <td><%= transaction.favored_name.nil?? 'NÃO INFORMADO': transaction.favored_name %></td>
+            <td><%= transaction.value %></td>
+        </tr>
+    <% end %>   
+  </tbody>
+</table>
+<div class="digg_pagination">
+  <%= will_paginate @transactions, :container => false %>
+</div>

@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   get 'favorecidos' => 'favored#index'
 
+  get 'transacoes' => 'transactions#index'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

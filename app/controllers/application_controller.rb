@@ -44,7 +44,6 @@ class ApplicationController < ActionController::Base
       end
 
       LazyHighCharts::HighChart.new('graph') do |f|
-        f.title(text: "Gasto por ano")
         f.xAxis(categories: (2010..2016).to_a)
         f.yAxis(min: 0, title: nil)
         f.series(name: "Gasto total", data: yearly_total)

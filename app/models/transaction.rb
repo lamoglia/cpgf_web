@@ -8,4 +8,8 @@ class Transaction < ActiveRecord::Base
   belongs_to :transaction_type
   
   validates_presence_of :superior_organ, :subordinated_organ, :management_unit, :source, :person, :favored, :transaction_type
+
+  delegate :name, :to => :person, :prefix => true
+  delegate :name, :to => :favored, :prefix => true
+
 end
