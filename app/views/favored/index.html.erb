@@ -1,5 +1,16 @@
 <h2>Favorecidos</br><small>Cartão de Pagamento do Governo Federal</small></h2>
-</br>
+<br/>
+<div class="row">
+  <div class="col-sm-12">
+    <form action="/favorecidos" class="form-inline" role="form">
+      <div class="form-group">
+        <input size="60" type="text" placeholder="Pesquisar nome" class="form-control" id="name" name="name" value="<%= @search_term %>">
+      </div>
+      <button type="submit" title="Pesquisar" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+    </form>
+  </div>
+</div>
+<br/>
 <table class="table table-hover">
   <thead>
     <tr>

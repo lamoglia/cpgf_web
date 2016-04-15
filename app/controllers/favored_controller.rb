@@ -9,5 +9,9 @@ class FavoredController < ApplicationController
                   .group("favored.id")
                   .paginate(:page => params[:page], :per_page => 15)
                   .order('total desc')
+    
+    @favored = @favored.name_contains(params[:name].upcase) if params[:name].present?
+
+    @search_term = params[:name].upcase if params[:name].present?
   end
 end

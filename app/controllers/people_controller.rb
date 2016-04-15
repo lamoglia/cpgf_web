@@ -9,5 +9,10 @@ class PeopleController < ApplicationController
                   .group("people.id")
                   .paginate(:page => params[:page], :per_page => 15)
                   .order('total desc')
+
+    
+    @people = @people.name_contains(params[:name].upcase) if params[:name].present?
+
+    @search_term = params[:name].upcase if params[:name].present?
 	end
 end
