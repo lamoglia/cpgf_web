@@ -1,0 +1,31 @@
+<h2><%= @favored.name.nil?? "NÃO INFORMADO" : @favored.name %></br><small>Favorecido
+<% if @favored.masked_document.present? %>
+  CPF/CNPJ <%= @favored.masked_document %>
+<% end %>
+</small></h2>
+
+<br/>
+<p>Transações recebidas</p>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th class="col-sm-1">Data</th>
+      <th class="col-sm-9">Portador</th>
+      <th class="col-sm-2">Valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @transactions.each do |transaction| %>
+        <tr>
+            <td><%= transaction.date.strftime("%d/%m/%Y") %></td>
+            <td><%= link_to transaction.person_name.nil?? 'NÃO INFORMADO': transaction.person_name, person_path_url(transaction.person_id) %>
+            </td>
+            <td><%= transaction.value %></td>
+        </tr>
+    <% end %>   
+  </tbody>
+</table>
+<div class="digg_pagination">
+  <%= will_paginate @transactions, :container => false %>
+</div>
+<br/>

@@ -6,8 +6,10 @@ Rails.application.routes.draw do
   root 'application#index'
 
   get 'portadores' => 'people#index'
+  get 'portador/:id' => 'people#view', as: :person_path
 
   get 'favorecidos' => 'favored#index'
+  get 'favorecido/:id' => 'favored#view', as: :favored_path
 
   get 'transacoes' => 'transactions#index'
 

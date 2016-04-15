@@ -22,7 +22,8 @@
   <tbody>
     <% @favored.each do |fav| %>
         <tr>
-            <td title="<%= fav.name %>"><%= fav.name.nil?? 'NÃO INFORMADO': fav.name %></td>
+            <td title="<%= fav.name %>">
+            <%= link_to fav.name.nil?? 'NÃO INFORMADO': fav.name, favored_path_url(fav.id) %>
             <td><%= fav.masked_document %></td>
             <td><%= fav.total %></td>
         </tr>

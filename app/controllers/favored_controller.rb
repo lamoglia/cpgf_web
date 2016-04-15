@@ -14,4 +14,10 @@ class FavoredController < ApplicationController
 
     @search_term = params[:name].upcase if params[:name].present?
   end
+
+  def view
+    @favored = Favored.find(params[:id])
+
+    @transactions = @favored.transactions.paginate(:page => params[:page], :per_page => 15).order('date DESC')
+  end
 end

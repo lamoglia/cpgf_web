@@ -22,7 +22,7 @@
   <tbody>
     <% @people.each do |person| %>
         <tr>
-            <td><%= person.name.nil?? 'NÃO INFORMADO': person.name %></td>
+            <td><%= link_to person.name.nil?? 'NÃO INFORMADO': person.name, person_path_url(person.id) %></td>
             <td><%= person.masked_document %></td>
             <td><%= person.total %></td>
         </tr>

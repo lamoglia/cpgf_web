@@ -15,4 +15,11 @@ class PeopleController < ApplicationController
 
     @search_term = params[:name].upcase if params[:name].present?
 	end
+
+  def view
+    @person = Person.find(params[:id])
+
+    @transactions = @person.transactions.paginate(:page => params[:page], :per_page => 15).order('date DESC')
+  end
+
 end
