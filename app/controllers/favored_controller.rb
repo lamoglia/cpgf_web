@@ -4,11 +4,7 @@ class FavoredController < ApplicationController
   protect_from_forgery with: :exception
 
   def index
-    @favored = Favored.joins("left join transactions on transactions.favored_id = favored.id")
-                  .select("favored.*, sum(transactions.value) as total")
-                  .group("favored.id")
-                  .paginate(:page => params[:page], :per_page => 15)
-                  .order('total desc')
+    @favored = Favored.with_total_transactions.paginate(:page => params[:page], :per_page => 15)
     
     @favored = @favored.name_contains(params[:name].upcase) if params[:name].present?
 

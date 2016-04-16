@@ -14,19 +14,11 @@ class ApplicationController < ActionController::Base
   private
 
     def build_summary_by_favored()
-      Favored.joins("left join transactions on transactions.favored_id = favored.id")
-                  .select("favored.*, sum(transactions.value) as total")
-                  .group("favored.id")
-                  .order('total desc')
-                  .limit(10)
+      Favored.with_total_transactions.limit(10)
     end
 
     def build_summary_by_person()
-      Person.joins("left join transactions on transactions.person_id = people.id")
-                  .select("people.*, sum(transactions.value) as total")
-                  .group("people.id")
-                  .order('total desc')
-                  .limit(10)
+      Person.with_total_transactions.limit(10)
     end
 
     def build_yearly_total_chart()

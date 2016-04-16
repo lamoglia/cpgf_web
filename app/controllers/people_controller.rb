@@ -4,11 +4,8 @@ class PeopleController < ApplicationController
   protect_from_forgery with: :exception
 
 	def index
-    @people = Person.joins("left join transactions on transactions.person_id = people.id")
-                  .select("people.*, sum(transactions.value) as total")
-                  .group("people.id")
+    @people = Person.with_total_transactions
                   .paginate(:page => params[:page], :per_page => 15)
-                  .order('total desc')
 
     
     @people = @people.name_contains(params[:name].upcase) if params[:name].present?
