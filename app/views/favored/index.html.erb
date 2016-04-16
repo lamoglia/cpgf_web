@@ -25,7 +25,7 @@
             <td title="<%= fav.name %>">
             <%= link_to fav.name.nil?? 'NÃO INFORMADO': fav.name, favored_path_url(fav.id) %>
             <td><%= fav.masked_document %></td>
-            <td><%= fav.total %></td>
+            <td><%= number_to_currency(fav.total) %></td>
         </tr>
     <% end %>   
   </tbody>

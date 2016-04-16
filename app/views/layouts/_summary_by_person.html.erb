@@ -10,7 +10,7 @@
       <% data.each do |person| %>
         <tr>
             <td><%= link_to person.name.nil?? 'NÃO INFORMADO': person.name, person_path_url(person.id) %></td>
-            <td><%= person.total %></td>
+            <td><%= number_to_currency(person.total) %></td>
         </tr>
       <% end %>
     </tbody>

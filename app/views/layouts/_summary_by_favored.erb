@@ -10,7 +10,7 @@
       <% data.each do |favored| %>
         <tr>
             <td><%= link_to favored.name.nil?? 'NÃO INFORMADO': favored.name, favored_path_url(favored.id) %></td>
-            <td><%= favored.total %></td>
+            <td><%= number_to_currency(favored.total) %></td>
         </tr>
       <% end %>
     </tbody>

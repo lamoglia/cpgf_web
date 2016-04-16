@@ -19,7 +19,7 @@
         <tr>
             <td><%= transaction.date.strftime("%d/%m/%Y") %></td>
             <td><%= link_to transaction.favored_name.nil?? 'NÃO INFORMADO': transaction.favored_name, favored_path_url(transaction.favored_id) %></td>
-            <td><%= transaction.value %></td>
+            <td><%= number_to_currency(transaction.value) %></td>
         </tr>
     <% end %>   
   </tbody>
