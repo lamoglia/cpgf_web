@@ -18,5 +18,11 @@ class FavoredController < ApplicationController
 
     @first_transaction_date = @favored.transactions.order('date ASC').first.date
     @last_transaction_date = @favored.transactions.order('date DESC').first.date
+
+    month_count = (@last_transaction_date.year * 12 + @last_transaction_date.month) - (@first_transaction_date.year * 12 + @first_transaction_date.month)
+
+    @total_spent = @favored.transactions.map{|t| t.value}.reduce(0, :+)
+    @monthly_average = @total_spent/month_count
+    
   end
 end

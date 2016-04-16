@@ -1,13 +1,27 @@
-<h2><%= @favored.name.nil?? "NÃO INFORMADO" : @favored.name %></br><small>Favorecido
-<% if @favored.masked_document.present? %>
-  CPF/CNPJ <%= @favored.masked_document %>
-<% end %>
-</small></h2>
+<div class="row">
+  <div class="col-md-8">
+    <h2><%= @favored.name.nil?? "NÃO INFORMADO" : @favored.name %></br>
+      <small>Favorecido
+        <% if @favored.masked_document.present? %>
+          (CPF/CNPJ <%= @favored.masked_document %>)
+        <% end %>
+      </small>
+    </h2>
+  </div>
+  <div class="col-md-4">
+    <span class="total-summary">
+      <h3>~ <%= number_to_currency(@monthly_average) %>/mês
+        <small><br/>Total <%= number_to_currency(@total_spent) %></small>
+      </h3>
+    </span>
+  </div>
+</div>
 
 <br/>
 <p>Transações recebidas 
-<% if !@first_transaction_date.nil? && !@last_transaction_date.nil? %>
+<% if !@first_transaction_date.nil? && !@last_transaction_date.nil? && (@first_transaction_date != @last_transaction_date) %>
 de <%= @first_transaction_date.strftime("%d/%m/%Y") %> a <%= @last_transaction_date.strftime("%d/%m/%Y") %>
+(<%= distance_of_time_in_words(@first_transaction_date, @last_transaction_date) %>)
 <% end %>
 </p>
 <table class="table table-hover">
@@ -22,7 +36,7 @@ de <%= @first_transaction_date.strftime("%d/%m/%Y") %> a <%= @last_transaction_d
     <% @transactions.each do |transaction| %>
         <tr>
             <td><%= transaction.date.strftime("%d/%m/%Y") %></td>
-            <td><%= link_to transaction.person_name.nil?? 'NÃO INFORMADO': transaction.person_name, person_path_url(transaction.person_id) %></td>
+            <td><%= link_to transaction.person_name.nil?? "NÃO INFORMADO": transaction.person_name, person_path_url(transaction.person_id) %></td>
             <td><%= number_to_currency(transaction.value) %></td>
         </tr>
     <% end %>   
