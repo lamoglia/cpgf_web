@@ -27,6 +27,8 @@ gem 'bootstrap-sass'
 # Highcharts
 gem 'lazy_high_charts'
 
+gem 'rails-i18n'
+
 gem 'react-rails'
 
 gem 'will_paginate'
