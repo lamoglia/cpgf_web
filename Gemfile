@@ -30,6 +30,8 @@ gem 'rails-i18n'
 gem 'react-rails'
 
 gem 'will_paginate'
+# Formatação
+gem 'cpf_cnpj'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

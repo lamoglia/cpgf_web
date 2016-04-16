@@ -3,7 +3,7 @@
     <h2><%= @person.name.nil?? "NÃO INFORMADO" : @person.name %></br>
       <small>Portador
       <% if @person.masked_document.present? %>
-        (CPF <%= @person.masked_document %>)
+        (CPF <%= @formatted_document %>)
       <% end %> 
       </small>
     </h2>
@@ -11,7 +11,11 @@
   <div class="col-md-4">
     <span class="total-summary">
       <h3>~ <%= number_to_currency(@monthly_average) %>/mês
-        <small><br/>Total <%= number_to_currency(@total_spent) %></small>
+        <small><br/><%= number_to_currency(@total_spent) %>
+          <% if !@first_transaction_date.nil? && !@last_transaction_date.nil? && (@first_transaction_date != @last_transaction_date) %>
+          em <%= distance_of_time_in_words(@first_transaction_date, @last_transaction_date) %>
+          <% end %>
+        </small>
       </h3>
     </span>
   </div>

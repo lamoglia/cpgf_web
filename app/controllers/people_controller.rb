@@ -13,6 +13,7 @@ class PeopleController < ApplicationController
 
   def view
     @person = Person.find(params[:id])
+    @formatted_document = format_document(@person.masked_document)
 
     @transactions = @person.transactions.paginate(:page => params[:page], :per_page => 15).order('date DESC')
 
@@ -24,12 +25,24 @@ class PeopleController < ApplicationController
     @last_transaction_date = @person.transactions.order('date DESC').first.date
 
     month_count = (@last_transaction_date.year * 12 + @last_transaction_date.month) - (@first_transaction_date.year * 12 + @first_transaction_date.month)
-
+    
+    if month_count == 0
+      month_count = 1
+    end
+    
     @total_spent = @person.transactions.map{|t| t.value}.reduce(0, :+)
     @monthly_average = @total_spent/month_count
   end
 
   private
+
+    def format_document(doc)
+      if (doc.present?) && (!doc.include? '*')
+        CPF.new(doc).formatted
+      else
+        doc
+      end
+    end
 
     def get_person_subordinated_organ(person)
       subordinated_organs = person.transactions.pluck('DISTINCT subordinated_organ_id')
