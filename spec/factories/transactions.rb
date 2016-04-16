@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :transaction do
-    value Faker::Commerce.price
-    date Faker::Date.backward(14)
+    value               { Faker::Commerce.price }
+    date                { Faker::Date.backward(14) }
     superior_organ 
     subordinated_organ 
     management_unit 

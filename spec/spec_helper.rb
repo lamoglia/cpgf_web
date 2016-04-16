@@ -15,8 +15,13 @@
 # The `.rspec` file also contains a few flags that are not defaults but that
 # users commonly want.
 #
-# See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+# See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configurationx
+
 require "capybara/rspec"
+require 'simplecov'
+
+
+SimpleCov.start
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
@@ -91,4 +96,28 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+end
+
+#Configure database cleaner
+RSpec.configure do |config|
+
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  config.before(:each, :js => true) do
+    DatabaseCleaner.strategy = :truncation
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
 end
