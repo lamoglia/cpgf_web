@@ -7,10 +7,10 @@
       </tr>
     </thead>
     <tbody>
-      <% data.each do |person| %>
+      <% data.each do |favored| %>
         <tr>
-            <td><%= link_to person.name.nil?? 'NÃO INFORMADO': person.name, person_path_url(person.id) %></td>
-            <td><%= person.total %></td>
+            <td><%= link_to favored.name.nil?? 'NÃO INFORMADO': favored.name, favored_path_url(favored.id) %></td>
+            <td><%= favored.total %></td>
         </tr>
       <% end %>
     </tbody>

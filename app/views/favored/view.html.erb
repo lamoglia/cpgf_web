@@ -18,8 +18,7 @@
     <% @transactions.each do |transaction| %>
         <tr>
             <td><%= transaction.date.strftime("%d/%m/%Y") %></td>
-            <td><%= link_to transaction.person_name.nil?? 'NÃO INFORMADO': transaction.person_name, person_path_url(transaction.person_id) %>
-            </td>
+            <td><%= link_to transaction.person_name.nil?? 'NÃO INFORMADO': transaction.person_name, person_path_url(transaction.person_id) %></td>
             <td><%= transaction.value %></td>
         </tr>
     <% end %>   

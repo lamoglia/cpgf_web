@@ -15,7 +15,7 @@
   </div>
   <div class="col-md-6 col-sm-12">
     <h4><%= link_to "Favorecidos que mais receberam", favorecidos_path, title: "Favorecidos que mais receberam" %></h4>
-    <%= render partial: 'layouts/summary_by_person', locals: {data: @summary_by_favored} %>
+    <%= render partial: 'layouts/summary_by_favored', locals: {data: @summary_by_favored} %>
   </div>
 </div>
 </br>

@@ -13,24 +13,20 @@ class ApplicationController < ActionController::Base
 
   private
 
-     def build_summary_by_favored()
-      values = Array.new
-      Transaction.select("favored_id, sum(value) as total").group("favored_id").order("total DESC").limit(10).each do | rec |
-        favored = Favored.find(rec.favored_id)
-        values << {label: favored.name, value: ActiveSupport::NumberHelper.number_to_currency(rec.total.to_f, unit: 'R$')}
-      end
-
-      return values
+    def build_summary_by_favored()
+      Favored.joins("left join transactions on transactions.favored_id = favored.id")
+                  .select("favored.*, sum(transactions.value) as total")
+                  .group("favored.id")
+                  .order('total desc')
+                  .limit(10)
     end
 
     def build_summary_by_person()
-      values = Array.new
-      Transaction.select("person_id, sum(value) as total").group("person_id").order("total DESC").limit(10).each do | rec |
-        person = Person.find(rec.person_id)
-        values << {label: person.name, value: ActiveSupport::NumberHelper.number_to_currency(rec.total.to_f, unit: 'R$')}
-      end
-
-      return values
+      Person.joins("left join transactions on transactions.person_id = people.id")
+                  .select("people.*, sum(transactions.value) as total")
+                  .group("people.id")
+                  .order('total desc')
+                  .limit(10)
     end
 
     def build_yearly_total_chart()
