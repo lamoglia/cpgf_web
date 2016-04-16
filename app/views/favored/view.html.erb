@@ -5,7 +5,11 @@
 </small></h2>
 
 <br/>
-<p>Transações recebidas</p>
+<p>Transações recebidas 
+<% if !@first_transaction_date.nil? && !@last_transaction_date.nil? %>
+de <%= @first_transaction_date.strftime("%d/%m/%Y") %> a <%= @last_transaction_date.strftime("%d/%m/%Y") %>
+<% end %>
+</p>
 <table class="table table-hover">
   <thead>
     <tr>

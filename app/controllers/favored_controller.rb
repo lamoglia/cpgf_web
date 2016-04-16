@@ -15,5 +15,8 @@ class FavoredController < ApplicationController
     @favored = Favored.find(params[:id])
 
     @transactions = @favored.transactions.paginate(:page => params[:page], :per_page => 15).order('date DESC')
+
+    @first_transaction_date = @favored.transactions.order('date ASC').first.date
+    @last_transaction_date = @favored.transactions.order('date DESC').first.date
   end
 end

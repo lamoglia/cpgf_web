@@ -15,6 +15,9 @@ class PeopleController < ApplicationController
     @person = Person.find(params[:id])
 
     @transactions = @person.transactions.paginate(:page => params[:page], :per_page => 15).order('date DESC')
+    
+    @first_transaction_date = @person.transactions.order('date ASC').first.date
+    @last_transaction_date = @person.transactions.order('date DESC').first.date
   end
 
 end
