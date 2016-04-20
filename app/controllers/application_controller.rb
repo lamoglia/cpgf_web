@@ -6,35 +6,21 @@ class ApplicationController < ActionController::Base
   def index
     @yearly_total_chart = build_yearly_total_chart();
 
-    @summary_by_favored = build_summary_by_favored();
-    @summary_by_person = build_summary_by_person();
+    @summary_by_favored = Favored.order(total_transactions: :desc).limit(10)
+    @summary_by_person = Person.order(total_transactions: :desc).limit(10)
     @total_by_superior_organ_chart = build_total_by_superior_organ_chart();
   end
 
   private
 
-    def build_summary_by_favored()
-      Favored.order('total_transactions DESC').limit(10)
-    end
-
-    def build_summary_by_person()
-      Person.order('total_transactions DESC').limit(10)
-    end
-
     def build_yearly_total_chart()
-      today = Date.today
-      current_date = Date.new(2010, 1, 1)
-
-      yearly_total = Array.new
-      while current_date <= today
-        yearly_total << Transaction.where(:date => current_date.beginning_of_year .. current_date.end_of_year).sum(:value).to_f;
-        current_date = current_date.next_year
-      end
+      yearly_total = Transaction.group_by_year(:date, dates: true, format:"%Y").sum(:value)
+      yearly_total.delete_if { |key, value| key.to_i < 2009 }
 
       LazyHighCharts::HighChart.new('graph') do |f|
-        f.xAxis(categories: (2010..2016).to_a)
+        f.xAxis(categories: yearly_total.keys)
         f.yAxis(min: 0, title: nil)
-        f.series(name: "Gasto total", data: yearly_total)
+        f.series(name: "Gasto total", data: yearly_total.values.collect{ |a| a.to_f})
 
         f.legend(verticalAlign: 'bottom', horizontalAlign: 'right', layout: 'horizontal')
         f.chart({type: "column", height: 300})
@@ -48,21 +34,27 @@ class ApplicationController < ActionController::Base
       total = Transaction.sum('value');
       Transaction.select("superior_organ_id, sum(value) as total").group("superior_organ_id").order("total DESC").limit(10).each do | rec |
         superior_organ = SuperiorOrgan.find(rec.superior_organ_id)
-        superior_organs_total << [superior_organ.name, rec.total.to_f];
+        superior_organs_total << {name: superior_organ.name,data: [rec.total.to_f]}
         sum += rec.total.to_f
 
-        if (sum > total/1.2) then
-          superior_organs_total << ['OUTROS', (total - sum).to_f];
+        if (sum > total/1.1) then
+          superior_organs_total << {name: 'OUTROS',data: [(total - sum).to_f ]}
           break
         end
       end
 
-      LazyHighCharts::HighChart.new('pie') do |f|
+      LazyHighCharts::HighChart.new('bar') do |f|
         f.title(text: "Gasto por Órgão Superior")
-        f.series(name: "Gasto por Órgãos Superior", data: superior_organs_total)
+        f.options[:plotOptions][:series] = { :stacking => 'normal' }
+        f.xAxis(categories: ["Gasto"])
 
-        f.legend(verticalAlign: 'bottom', horizontalAlign: 'right', layout: 'horizontal')
-        f.chart({type: "pie"})
+        superior_organs_total.each do |so|
+          f.series(so)
+        end
+
+        f.legend(reversed: true, verticalAlign: 'bottom', horizontalAlign: 'center', layout: 'horizontal')
+        f.chart({type: "bar"})
+        f.yAxis(title: {text: "Gasto Total"})
       end
     end
 end

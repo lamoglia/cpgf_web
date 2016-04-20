@@ -33,6 +33,8 @@ gem 'will_paginate'
 # Formatação
 gem 'cpf_cnpj'
 
+gem 'groupdate'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
