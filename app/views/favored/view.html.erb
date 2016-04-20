@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-8">
-    <h2><%= @favored.name.nil?? "NÃO INFORMADO" : @favored.name %></br>
+    <h2><%= @favored.name %></br>
       <small>Favorecido
         <% if @favored.masked_document.present? %>
           (CNPJ <%= @formatted_document %>)
@@ -10,9 +10,11 @@
   </div>
   <div class="col-md-4">
     <span class="total-summary">
-      <h3>~ <%= number_to_currency(@monthly_average) %>/mês
-        <small><br/><%= number_to_currency(@total_spent) %>
-          <% if !@first_transaction_date.nil? && !@last_transaction_date.nil? && (@first_transaction_date != @last_transaction_date) %>
+      <h3>
+        <small>RECEBIMENTOS</small><br/>
+        ~ <%= number_to_currency(@monthly_average) %>/mês
+        <small><br/><%= number_to_currency(@favored.total_transactions) %>
+          <% if @first_transaction_date != @last_transaction_date %>
           em <%= distance_of_time_in_words(@first_transaction_date, @last_transaction_date) %>
           <% end %>
         </small>
@@ -22,6 +24,9 @@
 </div>
 
 <br/>
+<% if @favored.name == "NÃO INFORMADO" %>
+<p>Nome do favorecido não informado por motivo de sigilo* ou pela transação ser saque em dinheiro, nesse caso a destinação dos valores não são publicadas.</p>
+<% end %>
 <p>Transações recebidas 
 <% if !@first_transaction_date.nil? && !@last_transaction_date.nil? && (@first_transaction_date != @last_transaction_date) %>
 de <%= @first_transaction_date.strftime("%d/%m/%Y") %> a <%= @last_transaction_date.strftime("%d/%m/%Y") %>
@@ -32,15 +37,17 @@ de <%= @first_transaction_date.strftime("%d/%m/%Y") %> a <%= @last_transaction_d
   <thead>
     <tr>
       <th class="col-sm-1">Data</th>
-      <th class="col-sm-9">Portador</th>
+      <th class="col-sm-6">Portador</th>
+      <th class="col-sm-3">Transação</th>
       <th class="col-sm-2">Valor</th>
     </tr>
   </thead>
   <tbody>
     <% @transactions.each do |transaction| %>
         <tr>
-            <td><%= transaction.date.strftime("%d/%m/%Y") %></td>
-            <td><%= link_to transaction.person_name.nil?? "NÃO INFORMADO": transaction.person_name, person_path_url(transaction.person_id) %></td>
+            <td><%= transaction.hidden_date?? transaction.date.strftime("?*/%m/%Y") : transaction.date.strftime("%d/%m/%Y") %></td>
+            <td><%= link_to transaction.person_name, person_path_url(transaction.person_id), title: transaction.person_name %></td>
+            <td><%= transaction.transaction_type_description %></td>
             <td><%= number_to_currency(transaction.value) %></td>
         </tr>
     <% end %>   
@@ -50,3 +57,4 @@ de <%= @first_transaction_date.strftime("%d/%m/%Y") %> a <%= @last_transaction_d
   <%= will_paginate @transactions, :container => false %>
 </div>
 <br/>
+<p class="text-muted">*Informações protegidas por sigilo, nos termos da legislação, para garantia da segurança da sociedade e do Estado.</p>

@@ -22,9 +22,9 @@
   <tbody>
     <% @people.each do |person| %>
         <tr>
-            <td><%= link_to person.name.nil?? 'NÃO INFORMADO': person.name, person_path_url(person.id) %></td>
+            <td><%= link_to person.name, person_path_url(person.id) %></td>
             <td><%= person.masked_document %></td>
-            <td><%= number_to_currency(person.total) %></td>
+            <td><%= number_to_currency(person.total_transactions) %></td>
         </tr>
     <% end %>   
   </tbody>
@@ -32,3 +32,5 @@
 <div class="digg_pagination">
   <%= will_paginate @people, :container => false %>
 </div>
+<br/>
+<p class="text-muted">*Informações protegidas por sigilo, nos termos da legislação, para garantia da segurança da sociedade e do Estado.</p>

@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-8">
-    <h2><%= @person.name.nil?? "NÃO INFORMADO" : @person.name %></br>
+    <h2><%= @person.name %></br>
       <small>Portador
       <% if @person.masked_document.present? %>
         (CPF <%= @formatted_document %>)
@@ -10,9 +10,11 @@
   </div>
   <div class="col-md-4">
     <span class="total-summary">
-      <h3>~ <%= number_to_currency(@monthly_average) %>/mês
-        <small><br/><%= number_to_currency(@total_spent) %>
-          <% if !@first_transaction_date.nil? && !@last_transaction_date.nil? && (@first_transaction_date != @last_transaction_date) %>
+      <h3>
+        <small>GASTOS</small><br/>
+        ~ <%= number_to_currency(@monthly_average) %>/mês
+        <small><br/><%= number_to_currency(@person.total_transactions) %>
+          <% if @first_transaction_date != @last_transaction_date %>
           em <%= distance_of_time_in_words(@first_transaction_date, @last_transaction_date) %>
           <% end %>
         </small>
@@ -20,18 +22,34 @@
     </span>
   </div>
 </div>
+<br/>
 <div class="row">
   <div class="col-sm-6">
     <% if @management_unit.present? %>
-    <p>Unidade gestora: <%= @management_unit %></p>
+      <p>Unidade gestora: <%= @management_unit.first %>
+          <% if @management_unit.size > 1 %>
+            <a href="#" data-toggle="modal" data-target="#modalUnidadeGestora"><%= "(e #{@management_unit.size-1} outros)" %></a>
+              <%= render 'layouts/organs_modal', title: "Unidades gestoras", modal_id: "modalUnidadeGestora", data: @management_unit %>
+          <% end %>
+      </p>
     <% end %>
   </div>  
   <div class="col-sm-6">
     <% if @subordinated_organ.present? %>
-    <p>Órgão subordinado: <%= @subordinated_organ %></p>
+      <p>Órgão subordinado: <%= @subordinated_organ.first %>
+        <% if @subordinated_organ.size > 1 %>
+          <a href="#" data-toggle="modal" data-target="#modalSubordinados"><%= "(e #{@subordinated_organ.size-1} outros)" %></a>
+            <%= render 'layouts/organs_modal', title: "Órgãos subordinados", modal_id: "modalSubordinados", data: @subordinated_organ %>
+        <% end %>
+      </p>
     <% end %>
     <% if @superior_organ.present? %>
-    <p>Órgão superior: <%= @superior_organ %></p>
+      <p>Órgão superior: <%= @superior_organ.first %>
+          <% if @superior_organ.size > 1 %>
+            <a href="#" data-toggle="modal" data-target="#modalSuperiores"><%= "(e #{@superior_organ.size-1} outros)" %></a>
+              <%= render 'layouts/organs_modal', title: "Órgãos superiores", modal_id: "modalSuperiores", data: @superior_organ %>
+          <% end %>
+      </p>
     <% end %>
   </div>
 </div>
@@ -47,15 +65,17 @@ de <%= @first_transaction_date.strftime("%d/%m/%Y") %> a <%= @last_transaction_d
   <thead>
     <tr>
       <th class="col-sm-1">Data</th>
-      <th class="col-sm-9">Favorecido</th>
+      <th class="col-sm-6">Favorecido</th>
+      <th class="col-sm-3">Transação</th>
       <th class="col-sm-2">Valor</th>
     </tr>
   </thead>
   <tbody>
     <% @transactions.each do |transaction| %>
         <tr>
-            <td><%= transaction.date.strftime("%d/%m/%Y") %></td>
-            <td><%= link_to transaction.favored_name.nil?? "NÃO INFORMADO (#{transaction.transaction_type.description})": transaction.favored_name, favored_path_url(transaction.favored_id) %></td>
+            <td><%= transaction.hidden_date?? transaction.date.strftime("?*/%m/%Y") : transaction.date.strftime("%d/%m/%Y") %>
+            <td><%= link_to transaction.favored_name, favored_path_url(transaction.favored_id), title: transaction.favored_name %></td>
+            <td><%= transaction.transaction_type_description %></td>
             <td><%= number_to_currency(transaction.value) %></td>
         </tr>
     <% end %>   
@@ -65,3 +85,4 @@ de <%= @first_transaction_date.strftime("%d/%m/%Y") %> a <%= @last_transaction_d
   <%= will_paginate @transactions, :container => false %>
 </div>
 <br/>
+<p class="text-muted">*Informações protegidas por sigilo, nos termos da legislação, para garantia da segurança da sociedade e do Estado.</p>

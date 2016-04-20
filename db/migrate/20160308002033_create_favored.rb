@@ -4,6 +4,7 @@ class CreateFavored < ActiveRecord::Migration
       t.string :name
       t.string :masked_document
       t.string :url
+      t.decimal :total_transactions, :precision => 12, :scale => 2
       t.string :meta_title
       t.string :meta_description
       t.string :meta_image

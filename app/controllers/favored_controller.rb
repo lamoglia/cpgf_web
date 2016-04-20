@@ -4,31 +4,23 @@ class FavoredController < ApplicationController
   protect_from_forgery with: :exception
 
   def index
-    @favored = Favored.by_transactions_value.paginate(:page => params[:page], :per_page => 15)
+    @favored = Favored.order(total_transactions: :desc).paginate(:page => params[:page], :per_page => 15)
     
-    @favored = @favored.name_contains(params[:name].upcase) if params[:name].present?
+    @favored = @favored.name_contains(params[:name].upcase) unless params[:name].nil?
 
-    @search_term = params[:name].upcase if params[:name].present?
+    @search_term = params[:name] unless params[:name].nil?
   end
 
   def view
     @favored = Favored.find(params[:id])
 
-    @transactions = @favored.transactions.paginate(:page => params[:page], :per_page => 15).order('date DESC')
+    @transactions = @favored.transactions.paginate(:page => params[:page], :per_page => 15).order(date: :desc)
     @formatted_document = format_document(@favored.masked_document)
 
-    @first_transaction_date = @favored.transactions.order('date ASC').first.date
-    @last_transaction_date = @favored.transactions.order('date DESC').first.date
+    @first_transaction_date = @favored.earliest_transaction.date
+    @last_transaction_date = @favored.latest_transaction.date
 
-    month_count = (@last_transaction_date.year * 12 + @last_transaction_date.month) - (@first_transaction_date.year * 12 + @first_transaction_date.month)
-    
-    if month_count == 0
-      month_count = 1
-    end
-
-    @total_spent = @favored.transactions.map{|t| t.value}.reduce(0, :+)
-    @monthly_average = @total_spent/month_count
-
+    @monthly_average = @favored.monthly_transactions_avg
   end
 
   private

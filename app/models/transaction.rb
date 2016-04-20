@@ -11,5 +11,5 @@ class Transaction < ActiveRecord::Base
   
   delegate :name, :to => :person, :prefix => true
   delegate :name, :to => :favored, :prefix => true
-
+  delegate :description, :to => :transaction_type, :prefix => true
 end

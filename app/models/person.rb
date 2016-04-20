@@ -1,10 +1,24 @@
 class Person < ActiveRecord::Base
-  has_many :transactions
+  include TransactionCalculators
 
-  scope :name_contains, -> (name) { where("name like ?", "%#{name}%")}
+  has_many :transactions, :extend => TransactionAssociationMethods
 
-  scope :by_transactions_value, -> { joins("left join transactions on transactions.person_id = people.id")
-                  .select("people.*, sum(transactions.value) as total")
-                  .group("people.id")
-                  .order('total desc') }
+  def self.name_contains(name) 
+    where("name like ?", "%#{name}%")
+  end
+
+  def get_subordinated_organ
+    subordinated_organs_ids = transactions.pluck('DISTINCT subordinated_organ_id')
+    return SubordinatedOrgan.find(subordinated_organs_ids).collect(&:name).sort()
+  end
+
+  def get_management_unit
+    management_units_ids = transactions.pluck('DISTINCT management_unit_id')
+    return ManagementUnit.find(management_units_ids).collect(&:name).sort()
+  end
+
+  def get_superior_organ
+    superior_organs_ids = transactions.pluck('DISTINCT superior_organ_id')
+    return SuperiorOrgan.find(superior_organs_ids).collect(&:name).sort()
+  end
 end

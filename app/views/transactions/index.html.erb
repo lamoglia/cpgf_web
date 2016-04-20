@@ -13,9 +13,9 @@
   <tbody>
     <% @transactions.each do |transaction| %>
         <tr>
-            <td><%= transaction.date.strftime("%d/%m/%Y") %></td>
-            <td><%= link_to transaction.person_name.nil?? 'NÃO INFORMADO': transaction.person_name, person_path_url(transaction.person_id) %></td>
-            <td><%= link_to transaction.favored_name.nil?? "NÃO INFORMADO (#{transaction.transaction_type.description})": transaction.favored_name, favored_path_url(transaction.favored_id) %></td>
+            <td><%= transaction.hidden_date?? transaction.date.strftime("?*/%m/%Y") : transaction.date.strftime("%d/%m/%Y") %>
+            <td><%= link_to transaction.person_name, person_path_url(transaction.person_id) %></td>
+            <td><%= link_to transaction.favored_name, favored_path_url(transaction.favored_id), title: transaction.favored_name %></td>
             <td><%= number_to_currency(transaction.value) %></td>
         </tr>
     <% end %>   
@@ -24,3 +24,5 @@
 <div class="digg_pagination">
   <%= will_paginate @transactions, :container => false %>
 </div>
+<br/>
+<p>*Informações protegidas por sigilo, nos termos da legislação, para garantia da segurança da sociedade e do Estado.</p>

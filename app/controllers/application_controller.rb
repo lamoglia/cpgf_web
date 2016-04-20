@@ -14,11 +14,11 @@ class ApplicationController < ActionController::Base
   private
 
     def build_summary_by_favored()
-      Favored.by_transactions_value.limit(10)
+      Favored.order('total_transactions DESC').limit(10)
     end
 
     def build_summary_by_person()
-      Person.by_transactions_value.limit(10)
+      Person.order('total_transactions DESC').limit(10)
     end
 
     def build_yearly_total_chart()

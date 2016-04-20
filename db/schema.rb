@@ -14,14 +14,15 @@
 ActiveRecord::Schema.define(version: 20160309030929) do
 
   create_table "favored", force: :cascade do |t|
-    t.string   "name",             limit: 255
-    t.string   "masked_document",  limit: 255
-    t.string   "url",              limit: 255
-    t.string   "meta_title",       limit: 255
-    t.string   "meta_description", limit: 255
-    t.string   "meta_image",       limit: 255
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.string   "name",               limit: 255
+    t.string   "masked_document",    limit: 255
+    t.string   "url",                limit: 255
+    t.decimal  "total_transactions",             precision: 12, scale: 2
+    t.string   "meta_title",         limit: 255
+    t.string   "meta_description",   limit: 255
+    t.string   "meta_image",         limit: 255
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
   end
 
   create_table "management_units", force: :cascade do |t|
@@ -32,10 +33,11 @@ ActiveRecord::Schema.define(version: 20160309030929) do
   end
 
   create_table "people", force: :cascade do |t|
-    t.string   "name",            limit: 255
-    t.string   "masked_document", limit: 255
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.string   "name",               limit: 255
+    t.string   "masked_document",    limit: 255
+    t.decimal  "total_transactions",             precision: 12, scale: 2
+    t.datetime "created_at",                                              null: false
+    t.datetime "updated_at",                                              null: false
   end
 
   create_table "sources", force: :cascade do |t|

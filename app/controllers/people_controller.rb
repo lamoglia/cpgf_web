@@ -4,34 +4,27 @@ class PeopleController < ApplicationController
   protect_from_forgery with: :exception
 
 	def index
-    @people = Person.by_transactions_value.paginate(:page => params[:page], :per_page => 15)
+    @people = Person.order(total_transactions: :desc).paginate(:page => params[:page], :per_page => 15)
     
-    @people = @people.name_contains(params[:name].upcase) if params[:name].present?
+    @people = @people.name_contains(params[:name].upcase) unless params[:name].nil?
 
-    @search_term = params[:name].upcase if params[:name].present?
+    @search_term = params[:name] unless params[:name].nil?
 	end
 
   def view
     @person = Person.find(params[:id])
     @formatted_document = format_document(@person.masked_document)
 
-    @transactions = @person.transactions.paginate(:page => params[:page], :per_page => 15).order('date DESC')
+    @transactions = @person.transactions.paginate(:page => params[:page], :per_page => 15).order(date: :desc)
 
-    @subordinated_organ = get_person_subordinated_organ(@person)
-    @superior_organ = get_person_superior_organ(@person)
-    @management_unit = get_person_management_unit(@person)
+    @subordinated_organ = @person.get_subordinated_organ
+    @superior_organ = @person.get_superior_organ
+    @management_unit = @person.get_management_unit
 
-    @first_transaction_date = @person.transactions.order('date ASC').first.date
-    @last_transaction_date = @person.transactions.order('date DESC').first.date
+    @first_transaction_date = @person.earliest_transaction.date
+    @last_transaction_date = @person.latest_transaction.date
 
-    month_count = (@last_transaction_date.year * 12 + @last_transaction_date.month) - (@first_transaction_date.year * 12 + @first_transaction_date.month)
-    
-    if month_count == 0
-      month_count = 1
-    end
-    
-    @total_spent = @person.transactions.map{|t| t.value}.reduce(0, :+)
-    @monthly_average = @total_spent/month_count
+    @monthly_average = @person.monthly_transactions_avg
   end
 
   private
@@ -42,32 +35,5 @@ class PeopleController < ApplicationController
       else
         doc
       end
-    end
-
-    def get_person_subordinated_organ(person)
-      subordinated_organs = person.transactions.pluck('DISTINCT subordinated_organ_id')
-
-      if subordinated_organs.size == 1
-        return SubordinatedOrgan.find(subordinated_organs.first).name
-      end
-      return nil
-    end
-
-    def get_person_management_unit(person)
-      management_units = person.transactions.pluck('DISTINCT management_unit_id')
-
-      if management_units.size == 1
-        return ManagementUnit.find(management_units.first).name
-      end
-      return nil
-    end
-
-    def get_person_superior_organ(person)
-      superior_organs = @person.transactions.pluck('DISTINCT superior_organ_id')
-
-      if superior_organs.size == 1
-        return SuperiorOrgan.find(superior_organs.first).name
-      end
-      return nil
     end
 end

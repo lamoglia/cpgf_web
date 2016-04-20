@@ -2,7 +2,7 @@
 </br>
 <p>Informações dos pagamentos para aquisição e compras governamentais por meio de cartões de pagamento do Governo Federal, realizados por portadores de órgãos e entidades da Administração Pública Federal, que executam as despesas pelo Sistema Integrado de Administração Financeira do Governo Federal (Siafi).
 </p>
-<a href="http://www.portaltransparencia.gov.br/downloads/mensal.asp?c=CPGF" target="blank">Fonte: portaltransparencia.gov.br</a>
+<br/>
 <span style="text-align:center">
   <h4><%= link_to "Gasto total por ano", transacoes_path, title: "Gasto total por ano" %></h4>
 </span>
@@ -16,6 +16,10 @@
   <div class="col-md-6 col-sm-12">
     <h4><%= link_to "Favorecidos que mais receberam", favorecidos_path, title: "Favorecidos que mais receberam" %></h4>
     <%= render partial: 'layouts/summary_by_favored', locals: {data: @summary_by_favored} %>
+  </div>
+  <div class="col-sm-12">
+  <p class="text-muted">*Informações protegidas por sigilo, nos termos da legislação, para garantia da segurança da sociedade e do Estado.
+  </p>
   </div>
 </div>
 </br>

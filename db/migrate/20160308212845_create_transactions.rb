@@ -1,7 +1,7 @@
 class CreateTransactions < ActiveRecord::Migration
   def change
     create_table :transactions do |t|
-      t.decimal :value
+      t.decimal :value, :precision => 12, :scale => 2
       t.date :date, index: true
       t.boolean :hidden_date, default: false
       t.references :superior_organ, index: true, foreign_key: true
