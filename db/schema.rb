@@ -14,10 +14,14 @@
 ActiveRecord::Schema.define(version: 20160309030929) do
 
   create_table "favored", force: :cascade do |t|
-    t.string   "name",            limit: 255
-    t.string   "masked_document", limit: 255
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.string   "name",             limit: 255
+    t.string   "masked_document",  limit: 255
+    t.string   "url",              limit: 255
+    t.string   "meta_title",       limit: 255
+    t.string   "meta_description", limit: 255
+    t.string   "meta_image",       limit: 255
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   create_table "management_units", force: :cascade do |t|
@@ -63,8 +67,9 @@ ActiveRecord::Schema.define(version: 20160309030929) do
   end
 
   create_table "transactions", force: :cascade do |t|
-    t.decimal  "value",                           precision: 15, scale: 2, null: false
+    t.decimal  "value",                           precision: 10, scale: 2,                 null: false
     t.date     "date"
+    t.boolean  "hidden_date",                                              default: false
     t.integer  "superior_organ_id",     limit: 4
     t.integer  "subordinated_organ_id", limit: 4
     t.integer  "management_unit_id",    limit: 4
@@ -72,10 +77,11 @@ ActiveRecord::Schema.define(version: 20160309030929) do
     t.integer  "person_id",             limit: 4
     t.integer  "favored_id",            limit: 4
     t.integer  "transaction_type_id",   limit: 4
-    t.datetime "created_at",                                               null: false
-    t.datetime "updated_at",                                               null: false
+    t.datetime "created_at",                                                               null: false
+    t.datetime "updated_at",                                                               null: false
   end
 
+  add_index "transactions", ["date"], name: "index_transactions_on_date", using: :btree
   add_index "transactions", ["favored_id"], name: "index_transactions_on_favored_id", using: :btree
   add_index "transactions", ["management_unit_id"], name: "index_transactions_on_management_unit_id", using: :btree
   add_index "transactions", ["person_id"], name: "index_transactions_on_person_id", using: :btree
@@ -84,4 +90,11 @@ ActiveRecord::Schema.define(version: 20160309030929) do
   add_index "transactions", ["superior_organ_id"], name: "index_transactions_on_superior_organ_id", using: :btree
   add_index "transactions", ["transaction_type_id"], name: "index_transactions_on_transaction_type_id", using: :btree
 
+  add_foreign_key "transactions", "favored"
+  add_foreign_key "transactions", "management_units"
+  add_foreign_key "transactions", "people"
+  add_foreign_key "transactions", "sources"
+  add_foreign_key "transactions", "subordinated_organs"
+  add_foreign_key "transactions", "superior_organs"
+  add_foreign_key "transactions", "transaction_types"
 end

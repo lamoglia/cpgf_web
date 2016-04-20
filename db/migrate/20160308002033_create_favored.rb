@@ -3,6 +3,10 @@ class CreateFavored < ActiveRecord::Migration
     create_table :favored do |t|
       t.string :name
       t.string :masked_document
+      t.string :url
+      t.string :meta_title
+      t.string :meta_description
+      t.string :meta_image
 
       t.timestamps null: false
     end
