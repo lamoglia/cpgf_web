@@ -21,6 +21,16 @@ test:
   <<: *default
   database: db/test.sqlite3
 
+<% if ENV['OPENSHIFT_MYSQL_DB_HOST'] %>
+production:
+  adapter: mysql2
+  database: "<%=ENV['OPENSHIFT_APP_NAME']%>"
+  username: "<%=ENV['OPENSHIFT_MYSQL_DB_USERNAME']%>"
+  password: "<%=ENV['OPENSHIFT_MYSQL_DB_PASSWORD']%>"
+  host:     <%=ENV['OPENSHIFT_MYSQL_DB_HOST']%>
+  port:     <%=ENV['OPENSHIFT_MYSQL_DB_PORT']%>
+<% else %>
 production:
   <<: *default
   database: db/production.sqlite3
+<% end %>
