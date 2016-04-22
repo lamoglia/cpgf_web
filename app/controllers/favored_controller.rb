@@ -6,7 +6,7 @@ class FavoredController < ApplicationController
   def index
     @favored = Favored.order(total_transactions: :desc).paginate(:page => params[:page], :per_page => 15)
     
-    @favored = @favored.name_contains(params[:name].upcase) unless params[:name].nil?
+    @favored = @favored.name_contains(I18n.transliterate(params[:name]).upcase) unless params[:name].nil?
 
     @search_term = params[:name] unless params[:name].nil?
   end
