@@ -14,5 +14,6 @@
     <%= yield %>
   </div>
   <%= render 'layouts/footer' %>
+  <%= render :partial => 'layouts/analytics' if RAILS_ENV == 'production' %>
 </body>
 </html>
