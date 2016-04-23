@@ -48,8 +48,6 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'faker'
-  # Use sqlite3 as the database for Active Record
-  gem 'sqlite3'
 end
 
 group :test do
@@ -60,6 +58,8 @@ group :test do
   gem 'database_cleaner'
   # Code coverage
   gem 'simplecov', :require => false
+  # Use sqlite3 as the database for Active Record
+  gem 'sqlite3'
 end
 
 group :development do
@@ -69,7 +69,10 @@ group :development do
   gem 'spring'
 end
 
+group :development, :production do
+  gem 'mysql2', '~> 0.3.20'
+end
+
 group :production do
   gem 'puma'
-  gem 'mysql2'
 end

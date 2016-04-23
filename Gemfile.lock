@@ -116,7 +116,7 @@ GEM
     mini_portile2 (2.0.0)
     minitest (5.8.4)
     multi_json (1.11.2)
-    mysql2 (0.4.4)
+    mysql2 (0.3.20)
     nenv (0.3.0)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
@@ -251,7 +251,7 @@ DEPENDENCIES
   jquery-rails
   launchy
   lazy_high_charts
-  mysql2
+  mysql2 (~> 0.3.20)
   puma
   rails (= 4.1.4)
   rails-i18n
