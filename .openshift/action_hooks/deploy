@@ -5,13 +5,7 @@
 # ruby, etc.
 
 source $OPENSHIFT_CARTRIDGE_SDK_BASH
-
-function ruby_with_nodejs_context {
-  case $OPENSHIFT_RUBY_VERSION in
-    1.8) /usr/bin/scl enable nodejs010 "$1" ;;
-    1.9) /usr/bin/scl enable nodejs010 ruby193 "$1" ;;
-  esac
-}
+source ${OPENSHIFT_RUBY_DIR}/lib/ruby_context
 
 set -e
 
@@ -26,7 +20,7 @@ fi
 if [ -z "$RAILS_DB" ]; then
   echo 1>&2
   echo "Could not find the database cartridge.  Please run:" 1>&2
-  echo "rhc cartridge add -a $OPENSHIFT_APP_NAME -c mysql-5.1" 1>&2
+  echo "rhc cartridge add -a $OPENSHIFT_APP_NAME -c mysql-5.5" 1>&2
   echo "or"
   echo "rhc cartridge add -a $OPENSHIFT_APP_NAME -c postgresql-9.2" 1>&2
   echo "then make a sample commit (add whitespace somewhere) and re-push" 1>&2
@@ -39,6 +33,6 @@ else
 fi
 
 pushd ${OPENSHIFT_REPO_DIR} > /dev/null
-echo "exec rake db:migrate RAILS_ENV=${RAILS_ENV:-production}"
+echo "bundle exec rake db:migrate RAILS_ENV=${RAILS_ENV:-production}"
 ruby_with_nodejs_context "bundle exec rake db:migrate RAILS_ENV=${RAILS_ENV:-production}"
 popd > /dev/null
