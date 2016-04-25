@@ -24,3 +24,8 @@ production:
   host:     <%=ENV['OPENSHIFT_MYSQL_DB_HOST']%>
   port:     <%=ENV['OPENSHIFT_MYSQL_DB_PORT']%>
   <<: *defaults
+
+stage:
+  adapter: mysql2
+  database: CPGF_2016_DEV
+  <<: *defaults
