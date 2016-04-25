@@ -64,19 +64,19 @@ de <%= @first_transaction_date.strftime("%d/%m/%Y") %> a <%= @last_transaction_d
 <table class="table table-hover">
   <thead>
     <tr>
-      <th class="col-sm-1">Data</th>
-      <th class="col-sm-6">Favorecido</th>
-      <th class="col-sm-3">Transação</th>
-      <th class="col-sm-2">Valor</th>
+      <th class="col-md-1 col-sm-2">Data</th>
+      <th class="col-sm-5 col-xs-6">Favorecido</th>
+      <th class="col-sm-3 hidden-xs">Transação</th>
+      <th class="col-sm-2 col-xs-4">Valor</th>
     </tr>
   </thead>
   <tbody>
     <% @transactions.each do |transaction| %>
         <tr>
-            <td><%= transaction.hidden_date?? transaction.date.strftime("?*/%m/%Y") : transaction.date.strftime("%d/%m/%Y") %>
-            <td><%= link_to transaction.favored_name, favored_path_url(transaction.favored_id), title: transaction.favored_name %></td>
-            <td><%= transaction.transaction_type_description %></td>
-            <td><%= number_to_currency(transaction.value) %></td>
+            <td class="col-xs-1"><%= transaction.hidden_date?? transaction.date.strftime("?*/%m/%y") : transaction.date.strftime("%d/%m/%y") %>
+            <td class="col-sm-6 col-xs-7"><%= link_to transaction.favored_name, favored_path_url(transaction.favored_id), title: transaction.favored_name %></td>
+            <td class="col-sm-3 hidden-xs"><%= transaction.transaction_type_description %></td>
+            <td class="col-sm-2 col-xs-4"><%= number_to_currency(transaction.value) %></td>
         </tr>
     <% end %>   
   </tbody>

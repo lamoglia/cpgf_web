@@ -4,16 +4,16 @@
 <table class="table table-hover">
   <thead>
     <tr>
-      <th class="col-sm-1">Data</th>
+      <th class="col-sm-2 col-xs-1">Data</th>
       <th class="col-sm-4">Portador</th>
-      <th class="col-sm-5">Favorecido</th>
+      <th class="col-sm-4 col-xs-5">Favorecido</th>
       <th class="col-sm-2">Valor</th>
     </tr>
   </thead>
   <tbody>
     <% @transactions.each do |transaction| %>
         <tr>
-            <td><%= transaction.hidden_date?? transaction.date.strftime("?*/%m/%Y") : transaction.date.strftime("%d/%m/%Y") %>
+            <td><%= transaction.hidden_date?? transaction.date.strftime("?*/%m/%y") : transaction.date.strftime("%d/%m/%y") %>
             <td><%= link_to transaction.person_name, person_path_url(transaction.person_id) %></td>
             <td><%= link_to transaction.favored_name, favored_path_url(transaction.favored_id), title: transaction.favored_name %></td>
             <td><%= number_to_currency(transaction.value) %></td>
