@@ -9,7 +9,7 @@
     <tbody>
       <% data.each do |favored| %>
         <tr>
-            <td><%= link_to favored.name, favored_path_url(favored.id), title: favored.name %></td>
+            <td><%= link_to favored.name, favored_path_url(favored), title: favored.name %></td>
             <td><%= number_to_currency(favored.total_transactions) %></td>
         </tr>
       <% end %>

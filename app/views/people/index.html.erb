@@ -25,7 +25,7 @@
     <tbody>
       <% @people.each do |person| %>
           <tr>
-              <td class="col-sm-7 col-xs-8"><%= link_to person.name, person_path_url(person.id) %></td>
+              <td class="col-sm-7 col-xs-8"><%= link_to person.name, person_path_url(person) %></td>
               <td class="col-sm-3 hidden-xs"><%= person.masked_document %></td>
               <td class="col-sm-2 col-xs-4"><%= number_to_currency(person.total_transactions) %></td>
           </tr>

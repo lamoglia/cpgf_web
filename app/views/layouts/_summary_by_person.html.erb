@@ -9,7 +9,7 @@
     <tbody>
       <% data.each do |person| %>
         <tr>
-            <td><%= link_to person.name, person_path_url(person.id), title: person.name %></td>
+            <td><%= link_to person.name, person_path_url(person), title: person.name %></td>
             <td><%= number_to_currency(person.total_transactions) %></td>
         </tr>
       <% end %>
