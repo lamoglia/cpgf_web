@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'application#index'
 
+  get 'sobre' => 'application#about'
+
   get 'portadores' => 'people#index'
   get 'portador/:id' => 'people#view', as: :person_path
 

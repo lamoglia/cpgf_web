@@ -11,6 +11,9 @@ class ApplicationController < ActionController::Base
     @total_by_superior_organ_chart = build_total_by_superior_organ_chart();
   end
 
+  def about
+  end
+
   private
 
     def build_yearly_total_chart()
