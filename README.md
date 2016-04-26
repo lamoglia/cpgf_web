@@ -6,7 +6,11 @@ O objetivo é criar uma apresentação inteligível, permtindo diversas consulta
 [http://www.portaltransparencia.gov.br/downloads/mensal.asp?c=CPGF](http://www.portaltransparencia.gov.br/downloads/mensal.asp?c=CPGF)
 
 
-#### Groupdate (Conf. MySQL)
+### Dependências
+
+#### Groupdate
+
+É necessário configurar o banco de dados caso seja MySQL, habilitando suporte a timezones:
 
 [Time zone support](http://dev.mysql.com/doc/refman/5.6/en/time-zone-support.html) deve estar instalado no servidor.
 
