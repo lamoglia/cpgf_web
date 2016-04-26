@@ -11,27 +11,31 @@
   </div>
 </div>
 <br/>
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th class="col-sm-6 col-xs-7">Nome</th>
-      <th class="col-sm-3 hidden-xs">Documento de identificação</th>
-      <th class="col-sm-3 col-xs-5">Total recebido</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @favored.each do |fav| %>
-        <tr>
-            <td class="col-sm-6 col-xs-7" title="<%= fav.name %>">
-            <%= link_to fav.name, favored_path_url(fav.id) %>
-            <td class="col-sm-3 hidden-xs"><%= fav.masked_document %></td>
-            <td class="col-sm-3 col-xs-5"><%= number_to_currency(fav.total_transactions) %></td>
-        </tr>
-    <% end %>   
-  </tbody>
-</table>
-<div class="digg_pagination">
-  <%= will_paginate @favored, :container => false %>
-</div>
-<br/>
-<p class="text-muted">*Informações protegidas por sigilo, nos termos da legislação, para garantia da segurança da sociedade e do Estado.</p>
+<% if @favored.length == 0 %>
+  <p>Nenhum favorecido foi encontrato com o termo "<%= @search_term %>"</p>
+<% else %>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th class="col-sm-6 col-xs-7">Nome</th>
+        <th class="col-sm-3 hidden-xs">Documento de identificação</th>
+        <th class="col-sm-3 col-xs-5">Total recebido</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @favored.each do |fav| %>
+          <tr>
+              <td class="col-sm-6 col-xs-7" title="<%= fav.name %>">
+              <%= link_to fav.name, favored_path_url(fav.id) %>
+              <td class="col-sm-3 hidden-xs"><%= fav.masked_document %></td>
+              <td class="col-sm-3 col-xs-5"><%= number_to_currency(fav.total_transactions) %></td>
+          </tr>
+      <% end %>   
+    </tbody>
+  </table>
+  <div class="digg_pagination">
+    <%= will_paginate @favored, :container => false %>
+  </div>
+  <br/>
+  <p class="text-muted">*Informações protegidas por sigilo, nos termos da legislação, para garantia da segurança da sociedade e do Estado.</p>
+<% end %>
