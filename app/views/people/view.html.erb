@@ -1,6 +1,15 @@
+<%
+  title = "Gastos - #{@person.name}"
+  description = "Valores gastos por #{@person.name} em transações feitas usando o Cartão de Pagamento do Governo Federal (CPGF)."
+  set_meta_tags description: description,
+                 keywords: "#{@person.name}, gastos cartão corporativo",
+                 title: title,
+                 og: { title: title, description: description },
+                 twitter: { description: description } %>
 <div class="row">
   <div class="col-md-8">
-    <h2><%= @person.name %></br>
+    <h2>
+      <%= @person.name %><br/>
       <small>Portador
       <% if @person.masked_document.present? %>
         (CPF <%= @formatted_document %>)
@@ -23,6 +32,7 @@
   </div>
 </div>
 <br/>
+<hl/>
 <div class="row">
   <div class="col-sm-6">
     <% if @management_unit.present? %>

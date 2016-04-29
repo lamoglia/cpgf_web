@@ -1,3 +1,11 @@
+<%
+  title = "Recebimentos - #{@favored.name}"
+  description = "Valores recebidos por #{@favored.name} em transações feitas usando o Cartão de Pagamento do Governo Federal (CPGF)."
+  set_meta_tags description: description,
+                 keywords: "#{@favored.name}, gastos cartão corporativo, recebimentos cartão corporativo",
+                 title: title,
+                 og: { title: title, description: description },
+                 twitter: { description: description } %>
 <div class="row">
   <div class="col-md-8">
     <h2><%= @favored.name %></br>

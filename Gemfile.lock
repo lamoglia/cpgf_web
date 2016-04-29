@@ -106,6 +106,8 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    meta-tags (2.1.0)
+      actionpack (>= 3.0.0)
     method_source (0.8.2)
     mime-types (1.25.1)
     mini_portile2 (2.0.0)
@@ -233,6 +235,7 @@ DEPENDENCIES
   jquery-rails
   launchy
   lazy_high_charts
+  meta-tags
   mysql2 (~> 0.3.20)
   puma
   rails (= 4.1.4)
