@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   def prepare_meta_tags(options={})
     site_name   = "CPGF"
     title       = "CPGF"
-    description = "CPGF apresenta os dados fornecidos pelo governo sobre o Cartão de pagamento do governo federal (CPGF) em um formato amigável que facilita consultas e análises dos gastos declarados."
+    description = "CPGF apresenta os dados fornecidos pelo governo sobre o Cartão de pagamento do governo federal (CPGF) em um formato legível que facilita consultas e análises dos gastos declarados."
     image       = options[:image] || "your-default-image-url"
     current_url = request.url
     
