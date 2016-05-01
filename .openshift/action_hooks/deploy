@@ -36,3 +36,7 @@ pushd ${OPENSHIFT_REPO_DIR} > /dev/null
 echo "bundle exec rake db:migrate RAILS_ENV=${RAILS_ENV:-production}"
 ruby_with_nodejs_context "bundle exec rake db:migrate RAILS_ENV=${RAILS_ENV:-production}"
 popd > /dev/null
+
+echo "Precompiling assets"
+ruby_with_nodejs_context "bundle exec rake assets:precompile"
+echo "Precompiling assets - done"
