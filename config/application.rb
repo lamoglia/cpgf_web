@@ -24,8 +24,6 @@ module CpgfWeb
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :'pt-BR'
 
-    config.cache_store = :redis_store, ENV['REDIS_URL'], { expires_in: 90.minutes }
-
     # Do not swallow errors in after_commit/after_rollback callbacks.
     #config.active_record.raise_in_transactional_callbacks = true
 
