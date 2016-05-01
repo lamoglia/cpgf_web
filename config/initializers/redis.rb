@@ -1,1 +1,0 @@
-$redis = Redis::Namespace.new("cpgf", :redis => Redis.new)
