@@ -29,11 +29,6 @@ gem 'groupdate'
 
 gem 'meta-tags'
 
-gem 'redis'
-gem 'redis-namespace'
-gem 'redis-rails'
-gem 'redis-rack-cache'
-
 gem 'actionpack-page_caching'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

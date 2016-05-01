@@ -16,15 +16,11 @@ class SiteController < ApplicationController
 
   private 
     def get_summary_by_person
-      Rails.cache.fetch("summary:by-person", expires_in: 1.day) do
-        summary_by_person = Person.order(total_transactions: :desc).limit(10)
-      end
+      summary_by_person = Person.order(total_transactions: :desc).limit(10)
     end
 
     def get_summary_by_favored
-      Rails.cache.fetch("summary:by-favored", expires_in: 1.day) do
-        summary_by_favored = Favored.order(total_transactions: :desc).limit(10)
-      end
+      summary_by_favored = Favored.order(total_transactions: :desc).limit(10)
     end
 
 end
