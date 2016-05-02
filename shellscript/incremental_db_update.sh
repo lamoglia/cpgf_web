@@ -57,8 +57,20 @@ echo "Update data is ready at $OUTPUT_FILE"
 echo "Importing data to $TARGET_DATABASE_NAME"
 pv $OUTPUT_FILE | mysql -u root $TARGET_DATABASE_NAME
 
+#fix transactions with null dates (protected data)
+mysql -u root -e 'UPDATE transactions SET date = (select reference from sources where sources.id = transactions.source_id) , hidden_date = true
+WHERE transactions.date is null' $TARGET_DATABASE_NAME
+
+mysql -u root -e 'UPDATE people set name = "INFORMAÇÃO SIGILOSA*" where name is null' $TARGET_DATABASE_NAME
+
+mysql -u root -e 'UPDATE favored set name = "NÃO INFORMADO" where name is null' $TARGET_DATABASE_NAME
+
+mysql -u root -e 'UPDATE transaction_types set description = "INFORMAÇÃO SIGILOSA*" where description is null' $TARGET_DATABASE_NAME
+
 echo "Updating calculated totals."
 #calculate total spendings by person
 mysql -u root -e 'UPDATE people set total_transactions = (SELECT SUM(value) from transactions where transactions.person_id = people.id)' $TARGET_DATABASE_NAME
 #calculate total spendings by favored
 mysql -u root -e 'UPDATE favored set total_transactions = (SELECT SUM(value) from transactions where transactions.favored_id = favored.id)' $TARGET_DATABASE_NAME
+
+#REMOVE CACHED PAGES FROM ./app-root/runtime/repo/public/
