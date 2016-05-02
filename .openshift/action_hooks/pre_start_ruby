@@ -25,3 +25,5 @@ if ! [ "$(type -t set_env_var)" == "function" ]; then
     export RAILS_DB="mysql"
   fi
 fi
+
+source ${OPENSHIFT_DATA_DIR}/.myenv
