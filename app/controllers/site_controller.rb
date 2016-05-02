@@ -9,6 +9,8 @@ class SiteController < ApplicationController
     @summary_by_person = get_summary_by_person
 
     @total_by_superior_organ_chart = build_total_by_superior_organ_chart;
+
+    @last_source = Source.order("created_at").last;
   end
 
   def about

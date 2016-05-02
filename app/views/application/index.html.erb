@@ -2,7 +2,7 @@
 </br>
 <p>Informações dos pagamentos para aquisição e compras governamentais por meio de cartões de pagamento do Governo Federal, realizados por portadores de órgãos e entidades da Administração Pública Federal, que executam as despesas pelo Sistema Integrado de Administração Financeira do Governo Federal (Siafi).
 </p>
-<br/>
+<p>Última atualização feita em <%= @last_source.imported_at.strftime("%d/%m/%Y") %> com dados referentes ao mês de <%= l(@last_source.reference, format: "%B de %Y").downcase %>.</p>
 <span style="text-align:center">
   <h4><%= link_to "Gasto total por ano", transacoes_path, title: "Gasto total por ano" %></h4>
 </span>
