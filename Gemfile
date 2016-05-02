@@ -17,7 +17,7 @@ gem 'jbuilder', '~> 2.0'
 # Twitter bootstrap
 gem 'bootstrap-sass'
 # Highcharts
-gem 'lazy_high_charts'
+gem 'lazy_high_charts', :git => 'git://github.com/lamoglia/lazy_high_charts.git'
 
 gem 'rails-i18n'
 

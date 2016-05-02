@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/lamoglia/lazy_high_charts.git
+  revision: 011af5f7574b678c4fb5d35c5b579c90bbc663c2
+  specs:
+    lazy_high_charts (1.5.5)
+      hash-deep-merge
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -99,8 +106,6 @@ GEM
     json (1.8.3)
     launchy (2.4.3)
       addressable (~> 2.3)
-    lazy_high_charts (1.5.5)
-      hash-deep-merge
     listen (3.0.6)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9.7)
@@ -239,7 +244,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   launchy
-  lazy_high_charts
+  lazy_high_charts!
   meta-tags
   mysql2 (~> 0.3.20)
   puma
@@ -258,4 +263,4 @@ DEPENDENCIES
   will_paginate
 
 BUNDLED WITH
-   1.12.0
+   1.12.1
