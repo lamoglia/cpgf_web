@@ -1,21 +1,61 @@
 <%
-  title = "Sobre"
-  description = "Essa é uma iniciativa que tem por objetivo tornar os dados fornecidos pelo governo em caráter de Dados Abertos em informações inteligíveis para o cidadão comum."
-  set_meta_tags description: description,
-                 keywords: "Sobre CPGF, Cartão de pagamento do governo federal, cartão corporativo",
-                 title: title,
-                 og: { title: title, description: description },
-                 twitter: { description: description } %>
-<h2>Sobre</h2>
-</br>
-<p>Essa é uma iniciativa que tem por objetivo tornar os dados fornecidos pelo governo em caráter de <a href="https://pt.wikipedia.org/wiki/Dados_abertos#Dados_abertos_no_governo">"Dados Abertos"</a> em informações inteligíveis para o cidadão comum.</p>
-<p>Dados coletados pelo governo devem ser abertos aos cidadãos, direito garantido no artigo 5º da Constituição Federal brasileira (regula o acesso a informações públicas e está escrita no Projeto de Lei nº 41/2010).</p>
-<p>Normalmente os dados são fornecidos em formato otimizado para máquinas (grandes arquivos com informações tabulares desordenadas), de modo que o cidadão mesmo tendo acesso aos dados, não tem como fazer análises simples de seu conteúdo de maneira eficiente. Para melhorar isso, os dados fornecidos pelo governo são organizados aqui de maneira que nenhuma informação seja alterada ou manipulada, para que qualquer pessoa possa fazer consultas e analisar os dados de maneira mais prática e objetiva.
-Todos as fontes dos dados são citadas e podem ser facilmente verificadas sobre sua autenticidade.</p>
-<p>Quaisquer dúvidas, sugestões ou reclamações, entre em contato.</p>
-<br/>
-<h3>Contribua</h3>
-<p>Esse é um projeto de código aberto:</p>
-<a href="https://github.com/lamoglia/cpgf_web">https://github.com/lamoglia/cpgf_web</a>
-<br/>
-<br/>
+title = "Sobre"
+description = "Essa é uma iniciativa que tem por objetivo tornar os dados fornecidos pelo governo em caráter de Dados Abertos em informações inteligíveis para o cidadão comum."
+set_meta_tags description: description,
+keywords: "Sobre CPGF, Cartão de pagamento do governo federal, cartão corporativo",
+title: title,
+og: { title: title, description: description },
+twitter: { description: description } %>
+<div class="row">
+  <div class="col-sm-8 col-xs-12">
+    <h2>Sobre</h2>
+    <p>Essa é uma iniciativa que tem por objetivo tornar os dados fornecidos pelo governo em caráter de <a href="https://pt.wikipedia.org/wiki/Dados_abertos#Dados_abertos_no_governo">"Dados Abertos"</a> em informações inteligíveis para o cidadão comum.</p>
+    <p>Dados coletados pelo governo devem ser abertos aos cidadãos, direito garantido no artigo 5º da Constituição Federal brasileira (regula o acesso a informações públicas e está escrita no Projeto de Lei nº 41/2010).</p>
+    <p>Normalmente os dados são fornecidos em formato otimizado para máquinas (grandes arquivos com informações tabulares desordenadas), de modo que o cidadão mesmo tendo acesso aos dados, não tem como fazer análises simples de seu conteúdo de maneira eficiente. Para melhorar isso, os dados fornecidos pelo governo são organizados aqui de maneira que nenhuma informação seja alterada ou manipulada, para que qualquer pessoa possa fazer consultas e analisar os dados de maneira mais prática e objetiva.
+      Todos as fontes dos dados são citadas e podem ser verificadas sobre sua autenticidade.</p>
+      <p>Quaisquer dúvidas, sugestões ou reclamações, entre em contato.</p>
+      <br/>
+      <div class="row">
+        <div class="col-md-12 contact-form">
+          <h3>Contato</h3>
+          <form class="form" role="form" action="https://formspree.io/<%=ENV['CONTACT_EMAIL']%>"
+          method="POST">
+          <input type="text" name="_gotcha" style="display:none" />
+          <input type="hidden" name="_subject" value="[CPGF]Contato" />
+          <div class="row">
+            <div class="col-xs-12 col-sm-6 form-group">
+              <input class="form-control" id="name" name="na  me" placeholder="Nome" type="text" required autofocus />
+            </div>
+            <div class="col-xs-12 col-sm-6 form-group">
+              <input class="form-control" id="email" name="_replyto" placeholder="Email" type="email" required />
+            </div>
+          </div>
+          <textarea class="form-control" id="message" name="message" placeholder="Mensagem" rows="5" required></textarea>
+          <br />
+          <div class="row">
+            <div class="col-xs-12 col-md-12 form-group">
+              <button class="btn btn-primary pull-right" type="submit" value="Send">Enviar</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4 col-xs-12">
+    <h3>Contribua</h3>
+    <h4>Com código</h4>
+    <p>Esse é um projeto de código aberto, contribua com correções e novas funcionalidades.</p>
+    <a href="https://github.com/lamoglia/cpgf_web">https://github.com/lamoglia/cpgf_web</a>
+    <br/><br/>
+    <h4>Com doações</h4>
+    <p>Ajude a custear a infraestrutura, manutenção e desenvolvimento do projeto.</p>
+    <!-- INICIO FORMULARIO BOTAO PAGSEGURO -->
+    <form action="https://pagseguro.uol.com.br/checkout/v2/donation.html" method="post">
+      <!-- NÃO EDITE OS COMANDOS DAS LINHAS ABAIXO -->
+      <input type="hidden" name="currency" value="BRL" />
+      <input type="hidden" name="receiverEmail" value="fellipeml@hotmail.com" />
+      <input type="image" src="https://stc.pagseguro.uol.com.br/public/img/botoes/doacoes/180x25-doar.gif" name="submit" alt="Pague com PagSeguro - é rápido, grátis e seguro!" />
+    </form>
+    <!-- FINAL FORMULARIO BOTAO PAGSEGURO -->
+  </div>
+</div>
