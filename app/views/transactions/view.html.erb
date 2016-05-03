@@ -1,0 +1,40 @@
+<%
+  title = "Transação"
+  description = "Transação feita por #{@transaction.person_name} usando o Cartão de Pagamento do Governo Federal (CPGF) no valor de #{number_to_currency(@transaction.value)}."
+  set_meta_tags description: description,
+                 keywords: "transação cpgf, gastos cartão corporativo",
+                 title: title,
+                 og: { title: title, description: description },
+                 twitter: { description: description } %>
+<div class="row">
+  <div class="col-md-8">
+    <h2>Transação</h2>
+  </div>
+  <div class="col-md-4">
+    <span class="total-summary">
+      <h3>
+        <small>VALOR</small><br/>
+        <%= number_to_currency(@transaction.value) %>
+      </h3>
+    </span>
+  </div>
+</div>
+<br/>
+<hl/>
+<div class="row">
+  <div class="col-sm-5 col-xs-12">
+    Data: <%= @transaction.hidden_date?? @transaction.date.strftime("?*/%m/%Y") : @transaction.date.strftime("%d/%m/%Y") %><br/>
+    Portador: <%= link_to @transaction.person_name, person_path_url(@transaction.person), title: @transaction.person_name %><br/>
+    Favorecido: <%= link_to @transaction.favored_name, favored_path_url(@transaction.favored), title: @transaction.favored_name %><br/>
+    Tipo da transação: <%= @transaction.transaction_type_description %>
+  </div>  
+  <div class="col-sm-7 col-xs-12">
+    Unidade Gestora: <%= @transaction.management_unit_name %><br/>
+    Órgão Subordinado: <%= @transaction.subordinated_organ_name %><br/>
+    Órgão Superior: <%= @transaction.superior_organ_name %>
+  </div>
+</div>
+<hl/>
+<br/>
+<h4>Fonte</h4>
+<p>Dados referentes ao exercício de <%= l(@transaction.source.reference, format: "%B de %Y").downcase %>, publicados pelo <%= link_to 'Portal da Transparência', 'http://www.portaltransparencia.gov.br/downloads/mensal.asp?c=CPGF', title: "Portal da Transparência" %> por meio deste <%= link_to 'arquivo', "http://arquivos.portaldatransparencia.gov.br/downloads.asp?a=#{@transaction.source.reference.year}&m=#{sprintf('%02d',@transaction.source.reference.month)}&consulta=CPGF", title: "arquivo" %>.</p>

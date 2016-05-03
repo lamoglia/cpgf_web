@@ -10,9 +10,12 @@
   <%= render 'layouts/shim' %>
 </head>
 <body>
-  <%= render 'layouts/navbar' %>
-  <div class="container">
-    <%= yield %>
+  <div class="wrapper">
+    <%= render 'layouts/navbar' %>
+    <div class="container">
+      <%= yield %>
+    </div>
+    <div class="push"></div>
   </div>
   <%= render 'layouts/footer' %>
   <%= render :partial => 'layouts/analytics' if Rails.env.production? %>

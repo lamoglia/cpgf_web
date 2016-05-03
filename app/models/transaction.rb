@@ -11,5 +11,8 @@ class Transaction < ActiveRecord::Base
   
   delegate :name, :to => :person, :prefix => true
   delegate :name, :to => :favored, :prefix => true
+  delegate :name, :to => :management_unit, :prefix => true
+  delegate :name, :to => :superior_organ, :prefix => true
+  delegate :name, :to => :subordinated_organ, :prefix => true
   delegate :description, :to => :transaction_type, :prefix => true
 end

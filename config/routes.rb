@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get 'favorecidos/:id' => 'favored#view', as: :favored_path
 
   get 'transacoes' => 'transactions#index'
+  get 'transacoes/:id' => 'transactions#view', as: :transaction_path
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

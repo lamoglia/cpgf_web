@@ -36,11 +36,9 @@
 /* footer */
 
 footer {
-  margin-top: 45px;
   padding-top: 10px;
   border-top: 1px solid #eaeaea;
   color: #777;
-  min-height: 120px;
   background-color: #dedede;
 }
 
@@ -76,4 +74,31 @@ footer ul li {
 
 .total-summary h3{
   color: #b14949;
+}
+
+.left{
+  float: left;
+}
+
+/* sticky footer */
+html, body {
+  height: 100%;
+}
+.wrapper {
+  min-height: 100%;
+  height: auto !important; /* This line and the next line are not necessary unless you need IE6 support */
+  height: 100%;
+  margin: 0 auto -120px; /* the bottom margin is the negative value of the footer's height */
+}
+.footer, .push {
+  height: 120px; /* .push must be the same height as .footer */
+}
+
+/* transaction details */
+
+table.table tr td span.row-details { display:none;}
+table.table tr:hover td span.row-details { display:inline-block;}
+.row-details{
+  float: right;
+  display: inline;
 }
