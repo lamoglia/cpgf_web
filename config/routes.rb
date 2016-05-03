@@ -7,17 +7,12 @@ Rails.application.routes.draw do
 
   get 'sobre' => 'application#about'
 
-  match 'portadores/:page', :to => 'people#index', :via => :get, defaults: {page: 1}
   get 'portadores' => 'people#index'
-  match 'portador/:id/:page', :to => 'people#view', :via => :get
-  get 'portador/:id' => 'people#view', as: :person_path
+  get 'portadores/:id' => 'people#view', as: :person_path
 
-  match 'favorecidos/:page', :to => 'favored#index', :via => :get
   get 'favorecidos' => 'favored#index'
-  match 'favorecido/:id/:page', :to => 'favored#view', :via => :get
-  get 'favorecido/:id' => 'favored#view', as: :favored_path
+  get 'favorecidos/:id' => 'favored#view', as: :favored_path
 
-  match 'transacoes/:page', :to => 'transactions#index', :via => :get
   get 'transacoes' => 'transactions#index'
 
   # Example of regular route:

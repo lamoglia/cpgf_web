@@ -1,5 +1,4 @@
 class PeopleController < ApplicationController
-  caches_page :index, :view
   
 	def index
     @people = Person.order(total_transactions: :desc).paginate(:page => params[:page], :per_page => 15)
