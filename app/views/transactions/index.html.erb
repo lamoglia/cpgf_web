@@ -30,8 +30,6 @@
     <% end %>   
   </tbody>
 </table>
-<div class="digg_pagination">
-  <%= will_paginate @transactions, :container => false %>
-</div>
+<%= will_paginate @transactions, :container => false, renderer: BootstrapPagination::Rails %>
 <br/>
 <p class="text-muted">*Informações protegidas por sigilo, nos termos da legislação, para garantia da segurança da sociedade e do Estado.</p>

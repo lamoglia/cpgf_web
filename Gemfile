@@ -22,6 +22,7 @@ gem 'lazy_high_charts', :git => 'git://github.com/lamoglia/lazy_high_charts.git'
 gem 'rails-i18n'
 
 gem 'will_paginate'
+gem 'will_paginate-bootstrap'
 # Formatação
 gem 'cpf_cnpj'
 
