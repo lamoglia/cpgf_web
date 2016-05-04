@@ -7,14 +7,16 @@ Rails.application.routes.draw do
 
   get 'sobre' => 'application#about'
 
-  get 'portadores' => 'people#index'
-  get 'portadores/:id' => 'people#view', as: :person_path
+  scope 'cpgf' do
+    get 'portadores' => 'people#index'
+    get 'portadores/:id' => 'people#view', as: :person_path
 
-  get 'favorecidos' => 'favored#index'
-  get 'favorecidos/:id' => 'favored#view', as: :favored_path
+    get 'favorecidos' => 'favored#index'
+    get 'favorecidos/:id' => 'favored#view', as: :favored_path
 
-  get 'transacoes' => 'transactions#index'
-  get 'transacoes/:id' => 'transactions#view', as: :transaction_path
+    get 'transacoes' => 'transactions#index'
+    get 'transacoes/:id' => 'transactions#view', as: :transaction_path
+  end
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
