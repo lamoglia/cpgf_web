@@ -11,76 +11,77 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160309030929) do
+ActiveRecord::Schema.define(version: 20160509165926) do
 
-  create_table "favored", force: :cascade do |t|
-    t.string   "name",               limit: 255
-    t.string   "masked_document",    limit: 255
-    t.string   "url",                limit: 255
-    t.decimal  "total_transactions",             precision: 12, scale: 2
-    t.string   "meta_title",         limit: 255
-    t.string   "meta_description",   limit: 255
-    t.string   "meta_image",         limit: 255
-    t.datetime "created_at",                                              null: false
-    t.datetime "updated_at",                                              null: false
+  create_table "favored", force: true do |t|
+    t.string   "name"
+    t.string   "masked_document"
+    t.string   "url"
+    t.decimal  "total_transactions", precision: 12, scale: 2
+    t.string   "meta_title"
+    t.string   "meta_description"
+    t.string   "meta_image"
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
   end
 
-  create_table "management_units", force: :cascade do |t|
-    t.string   "code",       limit: 255
-    t.string   "name",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+  create_table "management_units", force: true do |t|
+    t.string   "code"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "people", force: :cascade do |t|
-    t.string   "name",               limit: 255
-    t.string   "masked_document",    limit: 255
-    t.decimal  "total_transactions",             precision: 12, scale: 2
-    t.datetime "created_at",                                              null: false
-    t.datetime "updated_at",                                              null: false
+  create_table "people", force: true do |t|
+    t.string   "name"
+    t.string   "masked_document"
+    t.decimal  "total_transactions", precision: 12, scale: 2
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
   end
 
-  create_table "sources", force: :cascade do |t|
-    t.string   "file_name",   limit: 255
+  create_table "sources", force: true do |t|
+    t.string   "file_name"
     t.date     "reference"
     t.datetime "imported_at"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
-  create_table "subordinated_organs", force: :cascade do |t|
-    t.string   "code",       limit: 255
-    t.string   "name",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+  create_table "subordinated_organs", force: true do |t|
+    t.string   "code"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "superior_organs", force: :cascade do |t|
-    t.string   "code",       limit: 255
-    t.string   "name",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+  create_table "superior_organs", force: true do |t|
+    t.string   "code"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "transaction_types", force: :cascade do |t|
-    t.string   "description", limit: 255
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+  create_table "transaction_types", force: true do |t|
+    t.string   "description"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.string   "friendly_description"
   end
 
-  create_table "transactions", force: :cascade do |t|
-    t.decimal  "value",                           precision: 10, scale: 2,                 null: false
+  create_table "transactions", force: true do |t|
+    t.decimal  "value",                 precision: 10, scale: 2,                 null: false
     t.date     "date"
-    t.boolean  "hidden_date",                                              default: false
-    t.integer  "superior_organ_id",     limit: 4
-    t.integer  "subordinated_organ_id", limit: 4
-    t.integer  "management_unit_id",    limit: 4
-    t.integer  "source_id",             limit: 4
-    t.integer  "person_id",             limit: 4
-    t.integer  "favored_id",            limit: 4
-    t.integer  "transaction_type_id",   limit: 4
-    t.datetime "created_at",                                                               null: false
-    t.datetime "updated_at",                                                               null: false
+    t.boolean  "hidden_date",                                    default: false
+    t.integer  "superior_organ_id"
+    t.integer  "subordinated_organ_id"
+    t.integer  "management_unit_id"
+    t.integer  "source_id"
+    t.integer  "person_id"
+    t.integer  "favored_id"
+    t.integer  "transaction_type_id"
+    t.datetime "created_at",                                                     null: false
+    t.datetime "updated_at",                                                     null: false
   end
 
   add_index "transactions", ["date"], name: "index_transactions_on_date", using: :btree
@@ -92,11 +93,4 @@ ActiveRecord::Schema.define(version: 20160309030929) do
   add_index "transactions", ["superior_organ_id"], name: "index_transactions_on_superior_organ_id", using: :btree
   add_index "transactions", ["transaction_type_id"], name: "index_transactions_on_transaction_type_id", using: :btree
 
-  add_foreign_key "transactions", "favored"
-  add_foreign_key "transactions", "management_units"
-  add_foreign_key "transactions", "people"
-  add_foreign_key "transactions", "sources"
-  add_foreign_key "transactions", "subordinated_organs"
-  add_foreign_key "transactions", "superior_organs"
-  add_foreign_key "transactions", "transaction_types"
 end

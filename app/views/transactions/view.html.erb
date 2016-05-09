@@ -26,7 +26,7 @@
     Data: <%= @transaction.hidden_date?? @transaction.date.strftime("?*/%m/%Y") : @transaction.date.strftime("%d/%m/%Y") %><br/>
     Portador: <%= link_to @transaction.person_name, person_path_url(@transaction.person), title: @transaction.person_name %><br/>
     Favorecido: <%= link_to @transaction.favored_name, favored_path_url(@transaction.favored), title: @transaction.favored_name %><br/>
-    Tipo da transação: <%= @transaction.transaction_type_description %>
+    Tipo da transação: <%= @transaction.transaction_type_friendly_description || @transaction.transaction_type_description %>
   </div>  
   <div class="col-sm-7 col-xs-12">
     Unidade Gestora: <%= @transaction.management_unit_name %><br/>

@@ -15,4 +15,5 @@ class Transaction < ActiveRecord::Base
   delegate :name, :to => :superior_organ, :prefix => true
   delegate :name, :to => :subordinated_organ, :prefix => true
   delegate :description, :to => :transaction_type, :prefix => true
+  delegate :friendly_description, :to => :transaction_type, :prefix => true
 end

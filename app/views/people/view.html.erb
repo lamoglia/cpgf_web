@@ -85,7 +85,7 @@ de <%= @first_transaction_date.strftime("%d/%m/%Y") %> a <%= @last_transaction_d
         <tr>
             <td><%= transaction.hidden_date?? transaction.date.strftime("?*/%m/%y") : transaction.date.strftime("%d/%m/%y") %>
             <td><%= link_to transaction.favored_name, favored_path_url(transaction.favored), title: transaction.favored_name %></td>
-            <td class="hidden-xs"><%= transaction.transaction_type_description %></td>
+            <td class="hidden-xs" title="<%= transaction.transaction_type_friendly_description || transaction.transaction_type_description %>"><%= transaction.transaction_type_friendly_description || transaction.transaction_type_description %></td>
             <td>
               <span class="left"><%= number_to_currency(transaction.value) %></span><span class="row-details"><a href="<%= transaction_path_url(transaction) %>" title="Detalhes"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></span>
             </td>
