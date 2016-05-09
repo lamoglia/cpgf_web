@@ -32,6 +32,8 @@ gem 'meta-tags'
 
 gem 'actionpack-page_caching'
 
+gem 'actionpack-action_caching'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

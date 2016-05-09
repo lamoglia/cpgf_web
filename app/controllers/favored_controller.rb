@@ -1,5 +1,7 @@
 class FavoredController < ApplicationController
-
+  caches_action :index, :cache_path => Proc.new { |c| c.params }
+  caches_action :view, :cache_path => Proc.new { |c| c.params }
+  
   def index
     @favored = Favored.order(total_transactions: :desc).paginate(:page => params[:page], :per_page => 15)
     
