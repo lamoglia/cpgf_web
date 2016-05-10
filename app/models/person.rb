@@ -31,7 +31,7 @@ class Person < ActiveRecord::Base
 
   def get_management_unit
     management_units_ids = transactions.pluck(:management_unit_id).uniq
-    return ManagementUnit.where(id: management_units_ids).collect(&:name).sort()
+    return ManagementUnit.where(id: management_units_ids).sort()
   end
 
   def get_superior_organ

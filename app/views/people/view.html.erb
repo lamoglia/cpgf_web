@@ -36,10 +36,10 @@
 <div class="row">
   <div class="col-sm-6">
     <% if @management_unit.present? %>
-      <p>Unidade gestora: <%= @management_unit.first %>
+      <p>Unidade gestora: <%= link_to @management_unit.first.name, management_unit_path_url(@management_unit.first.id) , title: @management_unit.first.name %>
           <% if @management_unit.size > 1 %>
             <a href="#" data-toggle="modal" data-target="#modalUnidadeGestora"><%= "(e #{@management_unit.size-1} outros)" %></a>
-              <%= render 'layouts/organs_modal', title: "Unidades gestoras", modal_id: "modalUnidadeGestora", data: @management_unit %>
+              <%= render 'layouts/management_units_modal', modal_id: "modalUnidadeGestora", data: @management_unit %>
           <% end %>
       </p>
     <% end %>
