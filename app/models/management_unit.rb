@@ -7,10 +7,6 @@ class ManagementUnit < ActiveRecord::Base
     Transaction.where(:management_unit_id => id).sum(:value)
   end
 
-  def to_param
-    "#{id}-#{name}".parameterize
-  end
-
   def self.name_contains(name) 
     where("name like ?", "%#{name}%")
   end
