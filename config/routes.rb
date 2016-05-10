@@ -16,6 +16,9 @@ Rails.application.routes.draw do
 
     get 'transacoes' => 'transactions#index'
     get 'transacoes/:id' => 'transactions#view', as: :transaction_path
+
+    get 'unidades_gestoras' => 'management_units#index'
+    get 'unidades_gestoras/:id' => 'management_units#view', as: :management_unit_path
   end
 
   # Example of regular route:

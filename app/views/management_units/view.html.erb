@@ -1,0 +1,64 @@
+<%
+  title = "Gastos - #{@management_unit.name}"
+  description = "Valores gastos por #{@management_unit.name} em transações feitas usando o Cartão de Pagamento do Governo Federal (CPGF)."
+  set_meta_tags description: description,
+                 keywords: "#{@management_unit.name}, gastos cartão corporativo",
+                 title: title,
+                 og: { title: title, description: description },
+                 twitter: { description: description } %>
+<div class="row">
+  <div class="col-md-8">
+    <h2>
+      <%= @management_unit.name %><br/>
+      <small>Unidade Gestora</small>
+    </h2>
+  </div>
+  <div class="col-md-4">
+    <span class="total-summary">
+      <h3>
+        <small>GASTOS</small><br/>
+        ~ <%= number_to_currency(@monthly_average) %>/mês
+        <small><br/><%= number_to_currency(@management_unit.total_transactions) %>
+          <% if @first_transaction_date != @last_transaction_date %>
+          em <%= distance_of_time_in_words(@first_transaction_date, @last_transaction_date) %>
+          <% end %>
+        </small>
+      </h3>
+    </span>
+  </div>
+</div>
+<br/>
+<hl/>
+<p>Transações realizadas 
+<% if !@first_transaction_date.nil? && !@last_transaction_date.nil? && (@first_transaction_date != @last_transaction_date) %>
+de <%= @first_transaction_date.strftime("%d/%m/%Y") %> a <%= @last_transaction_date.strftime("%d/%m/%Y") %>
+(<%= distance_of_time_in_words(@first_transaction_date, @last_transaction_date) %>)
+<% end %>
+</p>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th class="col-md-1 col-sm-2 col-xs-3">Data</th>
+      <th class="col-md-3 hidden-sm hidden-xs">Portador</th>
+      <th class="col-md-3 col-sm-4 col-xs-5">Favorecido</th>
+      <th class="col-md-3 col-sm-4 hidden-xs">Transação</th>
+      <th class="col-sm-2 col-xs-4">Valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @transactions.each do |transaction| %>
+        <tr>
+            <td><%= transaction.hidden_date?? transaction.date.strftime("?*/%m/%y") : transaction.date.strftime("%d/%m/%y") %>
+            <td class="hidden-sm hidden-xs"><%= link_to transaction.person_name, person_path_url(transaction.person), title: transaction.person_name %></td>
+            <td><%= link_to transaction.favored_name, favored_path_url(transaction.favored), title: transaction.favored_name %></td>
+            <td class="hidden-xs" title="<%= transaction.transaction_type_friendly_description || transaction.transaction_type_description %>"><%= transaction.transaction_type_friendly_description || transaction.transaction_type_description %></td>
+            <td>
+              <span class="left"><%= number_to_currency(transaction.value) %></span><span class="row-details"><a href="<%= transaction_path_url(transaction) %>" title="Detalhes"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></span>
+            </td>
+        </tr>
+    <% end %>   
+  </tbody>
+</table>
+<%= will_paginate @transactions, :container => false, renderer: BootstrapPagination::Rails %>
+<br/>
+<p class="text-muted">*Informações protegidas por sigilo, nos termos da legislação, para garantia da segurança da sociedade e do Estado.</p>

@@ -22,7 +22,7 @@
     <%= render partial: 'layouts/summary_by_transaction_type', locals: {data: @summary_by_transaction_type} %>
   </div>
   <div class="col-md-6 col-sm-12">
-    <h4>Gastos por unidade gestora</h4>
+    <h4><%= link_to "Gastos por unidade gestora", unidades_gestoras_path, title: "Gastos por unidade gestora" %></h4>
     <%= render partial: 'layouts/summary_by_management_unit', locals: {data: @summary_by_management_unit} %>
   </div>
   <div class="col-sm-12">

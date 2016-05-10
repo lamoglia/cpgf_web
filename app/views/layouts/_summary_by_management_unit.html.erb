@@ -9,7 +9,7 @@
     <tbody>
       <% data.each do |management_unit| %>
         <tr>
-            <td title="<%= management_unit[:name] %>"><%= management_unit[:name] %></td>
+            <td title="<%= management_unit[:name] %>"><%= link_to management_unit[:name], management_unit_path_url(management_unit[:id]) %></td>
             <td><%= number_with_precision(management_unit[:percentage], :precision => 2) %>%</td>
         </tr>
       <% end %>

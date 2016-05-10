@@ -1,0 +1,45 @@
+<%
+  title = "Unidades Gestoras"
+  description = "Unidades gestoras que realizaram transações usando o Cartão de Pagamento do Governo Federal."
+  set_meta_tags description: description,
+                 keywords: "unidades gestoras cartão corporativo, gastos cartão corporativo, unidades gestoras cartão pagamento governo",
+                 title: title,
+                 og: { title: title, description: description },
+                 twitter: { description: description } %>
+<h2>Unidades Gestoras<br/>
+<small>Cartão de Pagamento do Governo Federal</small></h2>
+<br/>
+<div class="row">
+  <div class="col-sm-12">
+    <form action="/cpgf/unidades_gestoras" class="form-inline" role="form">
+      <div class="form-group">
+        <input size="60" type="text" placeholder="Pesquisar nome" class="form-control" id="name" name="name" value="<%= @search_term %>">
+      </div>
+      <button type="submit" title="Pesquisar" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+    </form>
+  </div>
+</div>
+<br/>
+<% if @management_units.length == 0 %>
+  <p>Nenhuma unidade gestora foi encontrata com o termo "<%= @search_term %>"</p>
+<% else %>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th class="col-sm-9 col-xs-7">Nome</th>
+        <th class="col-sm-3 col-xs-5">Total gasto</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @management_units.each do |management_unit| %>
+          <tr>
+              <td class="col-sm-7 col-xs-8" title="<%= management_unit.name %>"><%= link_to management_unit.name, management_unit_path_url(management_unit.management_unit_id) %></td>
+              <td class="col-sm-2 col-xs-4"><%= number_to_currency(management_unit.total) %></td>
+          </tr>
+      <% end %>   
+    </tbody>
+  </table>
+  <%= will_paginate @people, :container => false, renderer: BootstrapPagination::Rails %>
+  <br/>
+  <p class="text-muted">*Informações protegidas por sigilo, nos termos da legislação, para garantia da segurança da sociedade e do Estado.</p>
+<% end %>
