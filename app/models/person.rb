@@ -11,6 +11,19 @@ class Person < ActiveRecord::Base
     where("name like ?", "%#{name}%")
   end
 
+  def self.cpf_contains(name) 
+    where("masked_document like ?", "%#{name}%")
+  end
+
+  def self.filter_by_cpf(cpf)
+    transliterated_cpf = I18n.transliterate(cpf);  
+    if cpf.size == 11
+      where('masked_document = ? or masked_document = ?',transliterated_cpf, "***#{transliterated_cpf[3...-3]}***")
+    else
+      cpf_contains(transliterated_cpf)
+    end
+  end
+
   def get_subordinated_organ
     subordinated_organs_ids = transactions.pluck(:subordinated_organ_id).uniq
     return SubordinatedOrgan.where(id: subordinated_organs_ids).collect(&:name).sort()

@@ -7,7 +7,12 @@ class PeopleController < ApplicationController
     
     unless params[:name].nil?
       @search_term = params[:name].strip
-      @people = @people.name_contains(I18n.transliterate(@search_term).upcase)
+      transliterated_search_term = I18n.transliterate(@search_term);
+      if @search_term.numeric?
+        @people = @people.filter_by_cpf(transliterated_search_term)
+      else        
+        @people = @people.name_contains(transliterated_search_term.upcase)
+      end
     end
 	end
 
