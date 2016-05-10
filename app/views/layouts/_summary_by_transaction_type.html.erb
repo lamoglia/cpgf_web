@@ -1,0 +1,18 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th class="col-xs-8">Transação</th>
+        <th class="col-xs-4">Proporção</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% data.each do |transaction_type| %>
+        <tr>
+            <td title="<%= transaction_type[:name] %>"><%= transaction_type[:name] %></td>
+            <td><%= number_with_precision(transaction_type[:percentage], :precision => 2) %>%</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,18 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th class="col-xs-8">Unidade Gestora</th>
+        <th class="col-xs-4">Proporção</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% data.each do |management_unit| %>
+        <tr>
+            <td title="<%= management_unit[:name] %>"><%= management_unit[:name] %></td>
+            <td><%= number_with_precision(management_unit[:percentage], :precision => 2) %>%</td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
