@@ -5,9 +5,10 @@ class PeopleController < ApplicationController
 	def index
     @people = Person.order(total_transactions: :desc).paginate(:page => params[:page], :per_page => 15)
     
-    @people = @people.name_contains(I18n.transliterate(params[:name]).upcase) unless params[:name].nil?
-
-    @search_term = params[:name] unless params[:name].nil?
+    unless params[:name].nil?
+      @search_term = params[:name].strip
+      @people = @people.name_contains(I18n.transliterate(@search_term).upcase)
+    end
 	end
 
   def view

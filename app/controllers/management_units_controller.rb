@@ -5,8 +5,10 @@ class ManagementUnitsController < ApplicationController
 	def index
     @management_units = ManagementUnit.joins(:transactions).select('*, sum(value) as total').group('management_unit_id').order('total DESC').paginate(:page => params[:page], :per_page => 15)
     
-    @management_units = @management_units.name_contains(I18n.transliterate(params[:name]).upcase) unless params[:name].nil?
-    @search_term = params[:name] unless params[:name].nil?
+    unless params[:name].nil?
+      @search_term = params[:name].strip
+      @management_units = @management_units.name_contains(I18n.transliterate(@search_term).upcase) unless params[:name].nil?
+    end
 	end
 
   def view
