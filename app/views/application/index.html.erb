@@ -10,11 +10,11 @@
 </br>
 <div class="row">
   <div class="col-md-6 col-sm-12">
-    <h4><%= link_to "Portadores que mais gastaram", portadores_path, title: "Portadores que mais gastaram" %></h4>
+    <h4><%= link_to "Quem mais gastou", portadores_path, title: "Portadores que mais gastaram" %></h4>
     <%= render partial: 'layouts/summary_by_person', locals: {data: @summary_by_person} %>
   </div>
   <div class="col-md-6 col-sm-12">
-    <h4><%= link_to "Favorecidos que mais receberam", favorecidos_path, title: "Favorecidos que mais receberam" %></h4>
+    <h4><%= link_to "Quem mais recebeu", favorecidos_path, title: "Favorecidos que mais receberam" %></h4>
     <%= render partial: 'layouts/summary_by_favored', locals: {data: @summary_by_favored} %>
   </div>
   <div class="col-md-6 col-sm-12">
