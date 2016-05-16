@@ -13,7 +13,7 @@ class TransactionsController < ApplicationController
   def report
     @suspect_report = SuspectReport.new(suspect_report_params)
 
-    if @suspect_report.save
+    if suspect_report_params(params['g-recaptcha-response']) && @suspect_report.save
       flash[:success] = 'Sua mensagem foi enviada e será analisada em breve.'
     else
       flash[:danger] = 'Ocorreu um erro ao enviar sua mensagem.'
@@ -26,5 +26,11 @@ class TransactionsController < ApplicationController
 
     def suspect_report_params
       params.require(:suspect_report).permit(:name, :email, :description, :transaction_id)
+    end
+
+    def verify_google_recptcha(response)
+      status = `curl “https://www.google.com/recaptcha/api/siteverify?secret=#{ENV['RECAPTCHA_SECRET_KEY']}&response=#{response}”` 
+      hash = JSON.parse(status)
+      hash[“success”] == true ? true : false
     end
 end
