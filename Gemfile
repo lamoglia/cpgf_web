@@ -34,6 +34,8 @@ gem 'actionpack-page_caching'
 
 gem 'actionpack-action_caching'
 
+gem 'rake', '11.1.2'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

@@ -256,6 +256,7 @@ DEPENDENCIES
   rack-mini-profiler
   rails (= 4.1.4)
   rails-i18n
+  rake (= 11.1.2)
   rspec-rails
   sass-rails (~> 5.0)
   shoulda-matchers
