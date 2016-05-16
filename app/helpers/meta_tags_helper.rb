@@ -1,8 +1,8 @@
 module MetaTagsHelper
     def prepare_meta_tags(options={})
-    site_name   = "CPGF"
-    title       = "CPGF"
-    description = "CPGF apresenta os dados fornecidos pelo governo sobre o Cartão de pagamento do governo federal (CPGF) em um formato legível que facilita consultas e análises dos gastos declarados."
+    site_name   = "Cartão de Pagamento do Governo Federal"
+    title       = "Cartão de Pagamento do Governo Federal"
+    description = "Contribua com a auditoria dos gastos feitos com o cartão corporativo, o cartão de pagamento do governo federal (CPGF)."
     image       = options[:image] || "your-default-image-url"
     current_url = request.url
     
@@ -11,14 +11,7 @@ module MetaTagsHelper
       title:       title,
       image:       image,
       description: description,
-      keywords:    %w[CPGF 'Cartão de pagamento do governo federal', 'Cartão corporativo', 'dados abertos'],
-      twitter: {
-        site_name: site_name,
-        site: '@aaaaaa',
-        card: 'summary',
-        description: description,
-        image: image
-      },
+      keywords:    %w[CPGF 'Cartão de pagamento do governo federal', 'Cartão corporativo', 'dados abertos', 'auditoria governo'],
       og: {
         url: current_url,
         site_name: site_name,
