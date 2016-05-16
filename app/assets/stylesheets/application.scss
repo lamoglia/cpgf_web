@@ -95,9 +95,7 @@ html, body {
 }
 
 /* transaction details */
-
-table.table tr td span.row-details { display:none;}
-table.table tr:hover td span.row-details { display:inline-block;}
+table.table tr td span.row-details { display:inline-block;}
 .row-details{
   float: right;
   display: inline;
