@@ -1,3 +1,5 @@
+
+
 class TransactionsController < ApplicationController
   caches_action :index, :cache_path => Proc.new { |c| c.params }
   caches_page :view
@@ -26,11 +28,5 @@ class TransactionsController < ApplicationController
 
     def suspect_report_params
       params.require(:suspect_report).permit(:name, :email, :description, :transaction_id)
-    end
-
-    def verify_google_recptcha(response)
-      status = `curl “https://www.google.com/recaptcha/api/siteverify?secret=#{ENV['RECAPTCHA_SECRET_KEY']}&response=#{response}”` 
-      hash = JSON.parse(status)
-      hash[“success”] == true ? true : false
     end
 end
