@@ -17,17 +17,10 @@ class PeopleController < ApplicationController
 	end
 
   def view
-    page_size = 15
     @person = Person.find(params[:id])
-
-    if !params[:page].present? 
-      last_page = (@person.transactions.count / page_size.to_f).ceil
-      redirect_to person_path_url id: params[:id], page: last_page unless params[:page].present?
-    end
-
     @formatted_document = format_document(@person.masked_document)
 
-    @transactions = @person.transactions.paginate(:page => params[:page], :per_page => page_size).order(date: :asc)
+    @transactions = @person.transactions.paginate(:page => params[:page], :per_page => 15).order(date: :desc)
 
     @subordinated_organ = @person.get_subordinated_organ
     @superior_organ = @person.get_superior_organ
