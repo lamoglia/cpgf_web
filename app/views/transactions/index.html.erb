@@ -25,7 +25,9 @@
             <td><%= transaction.hidden_date?? transaction.date.strftime("?*/%m/%y") : transaction.date.strftime("%d/%m/%y") %>
             <td class="hidden-xs"><%= link_to transaction.person_name, person_path_url(transaction.person_id) %></td>
             <td><%= link_to transaction.favored_name, favored_path_url(transaction.favored_id), title: transaction.favored_name %></td>
-            <td><span class="left"><%= number_to_currency(transaction.value) %></span><span class="row-details"><a href="<%= transaction_path_url(transaction) %>" title="Detalhes"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a></span></td>
+            <td>
+              <a href="<%= transaction_path_url(transaction) %>" title="Detalhes"><%= number_to_currency(transaction.value) %></a>
+            </td>
         </tr>
     <% end %>   
   </tbody>
