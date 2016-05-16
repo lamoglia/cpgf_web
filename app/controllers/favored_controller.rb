@@ -12,9 +12,15 @@ class FavoredController < ApplicationController
   end
 
   def view
+    page_size = 15
     @favored = Favored.find(params[:id])
 
-    @transactions = @favored.transactions.paginate(:page => params[:page], :per_page => 15).order(date: :desc)
+    if !params[:page].present? 
+      last_page = (@favored.transactions.count / page_size.to_f).ceil
+      redirect_to favored_path_url id: params[:id], page: last_page unless params[:page].present?
+    end
+
+    @transactions = @favored.transactions.paginate(:page => params[:page], :per_page => page_size).order(date: :asc)
     @formatted_document = format_document(@favored.masked_document)
 
     @first_transaction_date = @favored.earliest_transaction.date
