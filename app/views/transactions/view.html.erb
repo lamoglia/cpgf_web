@@ -52,6 +52,7 @@
       </div>
 
       <%= form_tag '', :name => "suspect-form", :id => 'suspect-form', :role => "form" do %>
+        <input type="hidden" name="suspect_report[transaction_id]" value="<%= @transaction.id %>"/>
         <div class="modal-body">
           <p>Caso tenha alguma dúvida sobre a legitimidade dessa transação, preencha o formulário abaixo para que ela seja analisada.</p>
           <div class="form-group">
@@ -70,15 +71,15 @@
             <div class="help-block with-errors"></div>
             <p class="right" id="count">500 caracteres restantes.</p>
           </div>
-          <div class="form-group">
-            <label for="transacoes">Código das transações relacionadas (entre vírulas)</label>
-            <input maxlength="256" type="transacoes" class="form-control" name="suspect_report[transactions]" id="transacoes" placeholder="Código das transações relacionadas (entre vírulas)" value="<%= @transaction.id %>" required data-error="Informe o(os) código(s) da(s) transação(ões) relacionadas." pattern="^[0-9, ]{1,}$">
-             <div class="help-block with-errors"></div>
-          </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Enviar</button>
+          <span id="modal-buttons">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <button type="submit" id="submit-button" class="btn btn-primary">Enviar</button>
+          </span>
+          <span id="sending-label" class="hidden">
+            <button type="button" class="btn btn-disabled" >Enviando...</button>
+          </span>
         </div>
       <% end %>
     </div>
@@ -91,6 +92,9 @@ $('#suspect-modal').on('shown.bs.modal', function () {
     if ($('#suspect-form').find('.has-error').length) {
       return false;
     }
+    $('#modal-buttons').addClass('hidden');
+    $('#sending-label').removeClass('hidden');
+
     ga('send', {
       hitType: 'event',
       eventCategory: 'form',

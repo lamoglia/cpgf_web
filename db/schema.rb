@@ -66,10 +66,12 @@ ActiveRecord::Schema.define(version: 20160516173640) do
     t.string   "name"
     t.string   "email"
     t.text     "description"
-    t.string   "transactions"
+    t.integer  "transaction_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "suspect_reports", ["transaction_id"], name: "index_suspect_reports_on_transaction_id", using: :btree
 
   create_table "transaction_types", force: true do |t|
     t.string   "description"

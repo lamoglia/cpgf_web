@@ -4,9 +4,11 @@ class CreateSuspectReports < ActiveRecord::Migration
       t.string :name
       t.string :email
       t.text :description
-      t.string :transactions
+      t.integer :transaction_id
 
       t.timestamps
     end
+
+    add_index :suspect_reports, :transaction_id
   end
 end

@@ -6,6 +6,7 @@ class Transaction < ActiveRecord::Base
   belongs_to :person
   belongs_to :favored
   belongs_to :transaction_type
+  has_many :suspect_report
   
   validates_presence_of :superior_organ, :subordinated_organ, :management_unit, :source, :person, :favored, :transaction_type, :value
   

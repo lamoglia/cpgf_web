@@ -11,21 +11,13 @@ class TransactionsController < ApplicationController
   end
 
   def report
-    @suspect_report = SuspectReport.new(suspect_report_params)
-    
-    @suspect_report.transactions.remove(' ').split(',').uniq do |id|
-      if !Transaction.find_by id: id
-        flash[:danger] = "A transação informada (código \"#{id}\") não existe.";
-        redirect_to Transaction.find(params[:id])
-        return
-      end
-    end
+  #  @suspect_report = SuspectReport.new(suspect_report_params)
 
-    if @suspect_report.save
+   # if @suspect_report.save
       flash[:success] = 'Sua mensagem foi enviada e será analisada em breve. Obrigado.'
-    else
-      flash[:danger] = 'Ocorreu um erro ao enviar sua mensagem. Tente novamente mais tarde.'
-    end
+  #  else
+  #    flash[:danger] = 'Ocorreu um erro ao enviar sua mensagem. Tente novamente mais tarde.'
+  #  end
 
     redirect_to Transaction.find(params[:id])
   end
@@ -33,6 +25,6 @@ class TransactionsController < ApplicationController
   private
 
     def suspect_report_params
-      params.require(:suspect_report).permit(:name, :email, :description, :transactions)
+      params.require(:suspect_report).permit(:name, :email, :description, :transaction_id)
     end
 end
