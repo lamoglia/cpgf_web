@@ -11,13 +11,13 @@ class TransactionsController < ApplicationController
   end
 
   def report
-  #  @suspect_report = SuspectReport.new(suspect_report_params)
+    @suspect_report = SuspectReport.new(suspect_report_params)
 
-   # if @suspect_report.save
-      flash[:success] = 'Sua mensagem foi enviada e será analisada em breve. Obrigado.'
-  #  else
-  #    flash[:danger] = 'Ocorreu um erro ao enviar sua mensagem. Tente novamente mais tarde.'
-  #  end
+    if @suspect_report.save
+      flash[:success] = 'Sua mensagem foi enviada e será analisada em breve.'
+    else
+      flash[:danger] = 'Ocorreu um erro ao enviar sua mensagem.'
+    end
 
     redirect_to Transaction.find(params[:id])
   end
