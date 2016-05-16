@@ -34,7 +34,6 @@
 }
 
 /* footer */
-
 footer {
   padding-top: 10px;
   border-top: 1px solid #eaeaea;
@@ -64,6 +63,23 @@ footer ul li {
   margin-left: 15px;
 }
 
+footer nav{
+  padding-top: 60px;
+}
+
+/* sticky footer */
+html, body {
+  height: 100%;
+}
+.wrapper {
+  min-height: 100%;
+  height: auto !important; /* This line and the next line are not necessary unless you need IE6 support */
+  height: 100%;
+  margin: 0 auto -140px; /* the bottom margin is the negative value of the footer's height */
+}
+.footer, .push {
+  height: 140px; /* .push must be the same height as .footer */
+}
 
 /* person view */
 .total-summary{
@@ -78,20 +94,6 @@ footer ul li {
 
 .left{
   float: left;
-}
-
-/* sticky footer */
-html, body {
-  height: 100%;
-}
-.wrapper {
-  min-height: 100%;
-  height: auto !important; /* This line and the next line are not necessary unless you need IE6 support */
-  height: 100%;
-  margin: 0 auto -120px; /* the bottom margin is the negative value of the footer's height */
-}
-.footer, .push {
-  height: 120px; /* .push must be the same height as .footer */
 }
 
 /* transaction details */
