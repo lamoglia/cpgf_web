@@ -15,7 +15,8 @@ Rails.application.routes.draw do
     get 'favorecidos/:id' => 'favored#view', as: :favored_path
 
     get 'transacoes' => 'transactions#index'
-    get 'transacoes/:id' => 'transactions#view', as: :transaction_path
+    get 'transacoes/:id' => 'transactions#view', as: :transaction
+    post 'transacoes/:id' => 'transactions#report'
 
     get 'unidades_gestoras' => 'management_units#index'
     get 'unidades_gestoras/:id' => 'management_units#view', as: :management_unit_path

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160509165926) do
+ActiveRecord::Schema.define(version: 20160516173640) do
 
   create_table "favored", force: true do |t|
     t.string   "name"
@@ -60,6 +60,15 @@ ActiveRecord::Schema.define(version: 20160509165926) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "suspect_reports", force: true do |t|
+    t.string   "name"
+    t.string   "email"
+    t.text     "description"
+    t.string   "transactions"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "transaction_types", force: true do |t|

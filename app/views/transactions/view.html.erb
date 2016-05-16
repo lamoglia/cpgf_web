@@ -6,6 +6,9 @@
                  title: title,
                  og: { title: title, description: description },
                  twitter: { description: description } %>
+<% flash.each do |message_type, message| %>
+  <div class="alert alert-<%= message_type %>"><%= message %></div>
+<% end %>
 <div class="row">
   <div class="col-md-8">
     <h2>Transação<br/><small>Cód. <%= @transaction.id %></small></h2>
@@ -16,6 +19,7 @@
         <small>VALOR</small><br/>
         <%= number_to_currency(@transaction.value) %>
       </h3>
+      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#suspect-modal" title="Comunicar suspeita">Comunicar suspeita</button>
     </span>
   </div>
 </div>
@@ -38,3 +42,65 @@
 <br/>
 <h4>Fonte</h4>
 <p>Dados referentes ao exercício de <%= l(@transaction.source.reference, format: "%B de %Y").downcase %>, publicados pelo <%= link_to 'Portal da Transparência', 'http://www.portaltransparencia.gov.br/downloads/mensal.asp?c=CPGF', title: "Portal da Transparência" %> por meio deste <%= link_to 'arquivo', "http://arquivos.portaldatransparencia.gov.br/downloads.asp?a=#{@transaction.source.reference.year}&m=#{sprintf('%02d',@transaction.source.reference.month)}&consulta=CPGF", title: "arquivo" %>.</p>
+<!-- Modal -->
+<div class="modal fade" id="suspect-modal" tabindex="-1" role="dialog" aria-labelledby="suspect-modal-label">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="suspect-modal-label">Comunicar Suspeita</h4>
+      </div>
+
+      <%= form_tag '', :name => "suspect-form", :id => 'suspect-form', :role => "form" do %>
+        <div class="modal-body">
+          <p>Caso tenha alguma dúvida sobre a legitimidade dessa transação, preencha o formulário abaixo para que ela seja analisada.</p>
+          <div class="form-group">
+            <label class="sr-only" for="nome">Nome (opcional)</label>
+            <input maxlength="64" type="text" class="form-control" name="suspect_report[name]" id="nome" placeholder="Nome (opcional)" pattern="^[A-z ]{1,}$" data-error="Nome inválido">
+            <div class="help-block with-errors"></div>
+          </div>
+          <div class="form-group">
+            <label class="sr-only" for="email">E-mail (opcional)</label>
+            <input maxlength="80" data-minlength="5" name="suspect_report[email]" type="email" class="form-control" id="email" placeholder="Email (opcional)" data-error="E-mail inválido">
+            <div class="help-block with-errors"></div>
+          </div>
+          <div class="form-group">
+            <label class="sr-only" for="descricao">Descreva sua suspeita</label>
+            <textarea maxlength="500" data-minlength="50" class="form-control" name="suspect_report[description]" id="descricao" rows="6" placeholder="Por que você suspeita que essa transação possa ser irregular?" required data-error="Descreva a sua suspeita (no mínimo 50 caracteres)"></textarea>
+            <div class="help-block with-errors"></div>
+            <p class="right" id="count">500 caracteres restantes.</p>
+          </div>
+          <div class="form-group">
+            <label for="transacoes">Código das transações relacionadas (entre vírulas)</label>
+            <input maxlength="256" type="transacoes" class="form-control" name="suspect_report[transactions]" id="transacoes" placeholder="Código das transações relacionadas (entre vírulas)" value="<%= @transaction.id %>" required data-error="Informe o(os) código(s) da(s) transação(ões) relacionadas." pattern="^[0-9, ]{1,}$">
+             <div class="help-block with-errors"></div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Enviar</button>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<script>
+$('#suspect-modal').on('shown.bs.modal', function () {
+  $('#nome').focus();
+  $('#suspect-form').validator().on('submit', function (e) {
+    if ($('#suspect-form').find('.has-error').length) {
+      return false;
+    }
+    ga('send', {
+      hitType: 'event',
+      eventCategory: 'form',
+      eventAction: 'submit',
+      eventLabel: 'envia-suspeita'
+    });
+  });
+});
+
+$("#descricao").keyup(function(){
+  $("#count").text((500 - $(this).val().length)+" caracteres restantes.");
+});
+</script>

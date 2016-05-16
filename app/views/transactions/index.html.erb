@@ -26,7 +26,7 @@
             <td class="hidden-xs"><%= link_to transaction.person_name, person_path_url(transaction.person_id) %></td>
             <td><%= link_to transaction.favored_name, favored_path_url(transaction.favored_id), title: transaction.favored_name %></td>
             <td>
-              <a href="<%= transaction_path_url(transaction) %>" title="Detalhes"><%= number_to_currency(transaction.value) %></a>
+              <a href="<%= transaction_path(transaction) %>" title="Detalhes"><%= number_to_currency(transaction.value) %></a>
             </td>
         </tr>
     <% end %>   
