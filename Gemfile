@@ -30,7 +30,7 @@ gem 'cpf_cnpj'
 
 gem 'groupdate'
 
-gem 'meta-tags'
+gem 'meta-tags', :git => 'git://github.com/lamoglia/meta-tags.git', :branch => 'iss_102'
 
 gem 'actionpack-page_caching'
 

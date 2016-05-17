@@ -5,6 +5,14 @@ GIT
     lazy_high_charts (1.5.5)
       hash-deep-merge
 
+GIT
+  remote: git://github.com/lamoglia/meta-tags.git
+  revision: 772efc8c042a2e28feaa716d4a70295a5f6a0935
+  branch: iss_102
+  specs:
+    meta-tags (2.1.0)
+      actionpack (>= 3.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -118,8 +126,6 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    meta-tags (2.1.0)
-      actionpack (>= 3.0.0)
     method_source (0.8.2)
     mime-types (1.25.1)
     mini_portile2 (2.0.0)
@@ -254,7 +260,7 @@ DEPENDENCIES
   jquery-turbolinks
   launchy
   lazy_high_charts!
-  meta-tags
+  meta-tags!
   mysql2 (~> 0.3.20)
   puma
   rack-mini-profiler
