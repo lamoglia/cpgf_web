@@ -3,7 +3,7 @@ module MetaTagsHelper
     site_name   = "Cartão de Pagamento do Governo Federal"
     title       = "Cartão de Pagamento do Governo Federal"
     description = "Contribua com a auditoria dos gastos feitos com o cartão corporativo, o cartão de pagamento do governo federal (CPGF)."
-    image       = options[:image] || asset_path '/images/yellow-card.png'
+    image       = options[:image] || view_context.image_path('/images/yellow-card.png')
     current_url = request.url
     
     defaults = {
