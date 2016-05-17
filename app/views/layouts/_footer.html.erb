@@ -1,8 +1,7 @@
-<footer class="footer">
+<footer class="footer" id="footer">
   <div class="container">
     <br/>
     <div class="col-xs-12 center"><p>O controle social é indispensável para combatermos a corrupção em nosso país.</p></div>
-
     <nav>
       <ul>
         <%= link_to "Repositório no GitHub", "https://github.com/lamoglia/cpgf_web", title: "Repositório no GitHub" %>
@@ -11,13 +10,13 @@
         <%= link_to "Sobre", sobre_path, title: "Sobre" %>
       </ul>
     </nav>
-        <span
-      class="fb-like left"
+    <div
+      class="fb-like fb-like-hidden left"
       data-share="true"
       data-width="450"
       data-layout="button_count" data-mobile-iframe="true"
       data-href="https://web-cpgf.rhcloud.com/"
-      data-show-faces="true">
-    </span>
+      data-show-faces="false">
+    </div>
   </div>
 </footer>

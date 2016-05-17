@@ -1,17 +1,58 @@
 <script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '245020032526716',
-      xfbml      : true,
-      version    : 'v2.6'
-    });
+this.Facebook = (function() {
+  var eventsBound, rootElement;
+  function Facebook() {}
+
+  rootElement = null;
+
+  eventsBound = false;
+
+  Facebook.load = function() {
+    var facebookScript, firstScript, initialRoot;
+    if (!($('#fb-root').size() > 0)) {
+      initialRoot = $('<div>').attr('id', 'fb-root');
+      $('body').prepend(initialRoot);
+    }
+    if (!($('#facebook-jssdk').size() > 0)) {
+      facebookScript = document.createElement("script");
+      facebookScript.id = 'facebook-jssdk';
+      facebookScript.async = 1;
+      facebookScript.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&appId=" + (Facebook.appId()) + "&version=v2.6";
+      firstScript = document.getElementsByTagName("script")[0];
+      firstScript.parentNode.insertBefore(facebookScript, firstScript);
+    }
+    if (!Facebook.eventsBound) {
+      return Facebook.bindEvents();
+    }
   };
 
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/pt_BR/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
+  Facebook.bindEvents = function() {
+    if (typeof Turbolinks !== 'undefined' && Turbolinks.supported) {
+      $(document).on('page:fetch', Facebook.saveRoot).on('page:change', Facebook.restoreRoot).on('page:load', function() {
+        return typeof FB !== "undefined" && FB !== null ? FB.XFBML.parse() : void 0;
+      });
+    }
+    return Facebook.eventsBound = true;
+  };
+
+  Facebook.saveRoot = function() {
+    return Facebook.rootElement = $('#fb-root').detach();
+  };
+
+  Facebook.restoreRoot = function() {
+    if ($('#fb-root').length > 0) {
+      return $('#fb-root').replaceWith(Facebook.rootElement);
+    } else {
+      return $('body').append(Facebook.rootElement);
+    }
+  };
+
+  Facebook.appId = function() {
+    return '245020032526716';
+  };
+
+  return Facebook;
+})();
+
+Facebook.load();
 </script>
