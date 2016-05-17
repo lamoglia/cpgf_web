@@ -19,7 +19,6 @@
         <small>VALOR</small><br/>
         <%= number_to_currency(@transaction.value) %>
       </h3>
-      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#suspect-modal" title="Comunicar suspeita">Comunicar suspeita</button>
     </span>
   </div>
 </div>
@@ -33,7 +32,7 @@
     Tipo da transação: <%= @transaction.transaction_type_friendly_description || @transaction.transaction_type_description %>
   </div>  
   <div class="col-sm-7 col-xs-12">
-    Unidade Gestora: <%= @transaction.management_unit_name %><br/>
+    Unidade Gestora: <%= link_to @transaction.management_unit_name, management_unit_path_url(@transaction.management_unit) , title: @transaction.management_unit_name %><br/>
     Órgão Subordinado: <%= @transaction.subordinated_organ_name %><br/>
     Órgão Superior: <%= @transaction.superior_organ_name %>
   </div>
@@ -42,6 +41,8 @@
 <br/>
 <h4>Fonte</h4>
 <p>Dados referentes ao exercício de <%= l(@transaction.source.reference, format: "%B de %Y").downcase %>, publicados pelo <%= link_to 'Portal da Transparência', 'http://www.portaltransparencia.gov.br/downloads/mensal.asp?c=CPGF', title: "Portal da Transparência" %> por meio deste <%= link_to 'arquivo', "http://arquivos.portaldatransparencia.gov.br/downloads.asp?a=#{@transaction.source.reference.year}&m=#{sprintf('%02d',@transaction.source.reference.month)}&consulta=CPGF", title: "arquivo" %>.</p>
+<br/>
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#suspect-modal" title="Comunicar suspeita">Comunicar suspeita</button>
 <!-- Modal -->
 <div class="modal fade" id="suspect-modal" tabindex="-1" role="dialog" aria-labelledby="suspect-modal-label">
   <div class="modal-dialog" role="document">

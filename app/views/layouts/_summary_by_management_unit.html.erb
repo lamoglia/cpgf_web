@@ -7,10 +7,10 @@
       </tr>
     </thead>
     <tbody>
-      <% data.each do |management_unit| %>
+      <% data.each do |entry| %>
         <tr>
-            <td title="<%= management_unit[:name] %>"><%= link_to management_unit[:name], management_unit_path_url(management_unit[:id]) %></td>
-            <td><%= number_with_precision(management_unit[:percentage], :precision => 2) %>%</td>
+            <td title="<%= entry[:management_unit].name %>"><%= link_to entry[:management_unit].name, management_unit_path_url(entry[:management_unit]) %></td>
+            <td><%= number_with_precision(entry[:percentage], :precision => 2) %>%</td>
         </tr>
       <% end %>
     </tbody>

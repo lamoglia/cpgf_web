@@ -7,7 +7,7 @@
       </div>
       <div class="modal-body">
         <% data.each do |unit| %>
-          <%= link_to unit.name, management_unit_path_url(unit.id) , title: unit.name %> <br/>
+          <%= link_to unit.name, management_unit_path_url(unit) , title: unit.name %> <br/>
         <% end %> 
       </div>
       <div class="modal-footer">
