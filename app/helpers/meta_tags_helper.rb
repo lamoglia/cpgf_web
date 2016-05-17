@@ -20,6 +20,10 @@ module MetaTagsHelper
         description: description,
         type: 'website',
         locale: 'pt_BR'
+      },
+      fb: {
+        app_id: '245020032526716',
+        admins: '646338843'
       }
     }
 
