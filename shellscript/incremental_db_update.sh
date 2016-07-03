@@ -3,7 +3,7 @@
 ## Database:Mysql
 
 NOW=`date +%d-%m-%Y_%Hh%Mm%Ss`
-SRC_DATABASE_NAME=CPGF_2016
+SRC_DATABASE_NAME=CPGF_2016_IMPORT
 TARGET_DATABASE_NAME=CPGF_2016_DEV
 OUTPUT_FILE="dump_add_$NOW.sql"
 
@@ -33,24 +33,24 @@ mysqldump -u root --no-create-info $SRC_DATABASE_NAME CPGF_ORGAO_SUBORDINADO --w
 #export transações
 mysqldump -u root --no-create-info $SRC_DATABASE_NAME CPGF_TRANSACAO --where "id > $MAX_TRANSACTION_ID" >> $OUTPUT_FILE
 
-#Fix table names
-sed -i 's/CPGF_FAVORECIDO/favored/g' $OUTPUT_FILE
-sed -i 's/CPGF_EXTRATO/sources/g' $OUTPUT_FILE
-sed -i 's/CPGF_ORGAO_SUBORDINADO/subordinated_organs/g' $OUTPUT_FILE
-sed -i 's/CPGF_ORGAO_SUPERIOR/superior_organs/g' $OUTPUT_FILE
-sed -i 's/CPGF_PESSOA/people/g' $OUTPUT_FILE
-sed -i 's/CPGF_TIPO_TRANSACAO/transaction_types/g' $OUTPUT_FILE
-sed -i 's/CPGF_TRANSACAO/transactions/g' $OUTPUT_FILE
-sed -i 's/CPGF_UNIDADE_GESTORA/management_units/g' $OUTPUT_FILE
+#Fix table names (not needed)
+#sed -i 's/CPGF_FAVORECIDO/favored/g' $OUTPUT_FILE
+#sed -i 's/CPGF_EXTRATO/sources/g' $OUTPUT_FILE
+#sed -i 's/CPGF_ORGAO_SUBORDINADO/subordinated_organs/g' $OUTPUT_FILE
+#sed -i 's/CPGF_ORGAO_SUPERIOR/superior_organs/g' $OUTPUT_FILE
+#sed -i 's/CPGF_PESSOA/people/g' $OUTPUT_FILE
+#sed -i 's/CPGF_TIPO_TRANSACAO/transaction_types/g' $OUTPUT_FILE
+#sed -i 's/CPGF_TRANSACAO/transactions/g' $OUTPUT_FILE
+#sed -i 's/CPGF_UNIDADE_GESTORA/management_units/g' $OUTPUT_FILE
 
 #fix table differences
-sed -i 's/INSERT INTO `transactions` /INSERT INTO `transactions` (`id`, `value`, `date`, `superior_organ_id`, `subordinated_organ_id`, `management_unit_id`, `source_id`, `person_id`, `favored_id`, `transaction_type_id`, `created_at`, `updated_at`) /g' $OUTPUT_FILE
-sed -i 's/INSERT INTO `favored` /INSERT INTO `favored` (`id`, `name`, `masked_document`, `created_at`, `updated_at`) /g' $OUTPUT_FILE
-sed -i 's/INSERT INTO `people` /INSERT INTO `people` (`id`, `name`, `masked_document`, `created_at`, `updated_at`) /g' $OUTPUT_FILE
+#sed -i 's/INSERT INTO `transactions` /INSERT INTO `transactions` (`id`, `value`, `date`, `superior_organ_id`, `subordinated_organ_id`, `management_unit_id`, `source_id`, `person_id`, `favored_id`, `transaction_type_id`, `created_at`, `updated_at`) /g' $OUTPUT_FILE
+#sed -i 's/INSERT INTO `favored` /INSERT INTO `favored` (`id`, `name`, `masked_document`, `created_at`, `updated_at`) /g' $OUTPUT_FILE
+#sed -i 's/INSERT INTO `people` /INSERT INTO `people` (`id`, `name`, `masked_document`, `created_at`, `updated_at`) /g' $OUTPUT_FILE
 
 #insert aditional params for created_at and updated_at
-sed -i 's/),/,NOW(),NOW()),/g' $OUTPUT_FILE
-sed -i 's/);/,NOW(),NOW());/g' $OUTPUT_FILE
+#sed -i 's/),/,NOW(),NOW()),/g' $OUTPUT_FILE
+#sed -i 's/);/,NOW(),NOW());/g' $OUTPUT_FILE
 
 echo "Update data is ready at $OUTPUT_FILE"
 
