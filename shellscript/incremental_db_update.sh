@@ -19,38 +19,19 @@ MAX_TRANSACTION_ID=`mysql -u root $TARGET_DATABASE_NAME -Bse 'SELECT MAX(id) FRO
 
 ##EXPORTS DATA
 #export extrato
-mysqldump -u root --no-create-info $SRC_DATABASE_NAME CPGF_EXTRATO --where "id > $MAX_SOURCE_ID" > $OUTPUT_FILE
+mysqldump -u root --no-create-info $SRC_DATABASE_NAME sources --where "id > $MAX_SOURCE_ID" > $OUTPUT_FILE
 #export portadores
-mysqldump -u root --no-create-info $SRC_DATABASE_NAME CPGF_PESSOA --where "id > $MAX_PERSON_ID" >> $OUTPUT_FILE
+mysqldump -u root --no-create-info $SRC_DATABASE_NAME people --where "id > $MAX_PERSON_ID" >> $OUTPUT_FILE
 #export favorecidos
-mysqldump -u root --no-create-info $SRC_DATABASE_NAME CPGF_FAVORECIDO --where "id > $MAX_FAVORED_ID" >> $OUTPUT_FILE
+mysqldump -u root --no-create-info $SRC_DATABASE_NAME favored --where "id > $MAX_FAVORED_ID" >> $OUTPUT_FILE
 #export tipo transacao
-mysqldump -u root --no-create-info $SRC_DATABASE_NAME CPGF_TIPO_TRANSACAO --where "id > $MAX_TRANSACTION_TYPE_ID" >> $OUTPUT_FILE
+mysqldump -u root --no-create-info $SRC_DATABASE_NAME transaction_types --where "id > $MAX_TRANSACTION_TYPE_ID" >> $OUTPUT_FILE
 #export tipo orgao superior
-mysqldump -u root --no-create-info $SRC_DATABASE_NAME CPGF_ORGAO_SUPERIOR --where "id > $MAX_SUPERIOR_ID" >> $OUTPUT_FILE
+mysqldump -u root --no-create-info $SRC_DATABASE_NAME superior_organs --where "id > $MAX_SUPERIOR_ID" >> $OUTPUT_FILE
 #export tipo orgao subordinado
-mysqldump -u root --no-create-info $SRC_DATABASE_NAME CPGF_ORGAO_SUBORDINADO --where "id > $MAX_SUBORDINATED_ID" >> $OUTPUT_FILE
+mysqldump -u root --no-create-info $SRC_DATABASE_NAME subordinated_organs --where "id > $MAX_SUBORDINATED_ID" >> $OUTPUT_FILE
 #export transações
-mysqldump -u root --no-create-info $SRC_DATABASE_NAME CPGF_TRANSACAO --where "id > $MAX_TRANSACTION_ID" >> $OUTPUT_FILE
-
-#Fix table names (not needed)
-#sed -i 's/CPGF_FAVORECIDO/favored/g' $OUTPUT_FILE
-#sed -i 's/CPGF_EXTRATO/sources/g' $OUTPUT_FILE
-#sed -i 's/CPGF_ORGAO_SUBORDINADO/subordinated_organs/g' $OUTPUT_FILE
-#sed -i 's/CPGF_ORGAO_SUPERIOR/superior_organs/g' $OUTPUT_FILE
-#sed -i 's/CPGF_PESSOA/people/g' $OUTPUT_FILE
-#sed -i 's/CPGF_TIPO_TRANSACAO/transaction_types/g' $OUTPUT_FILE
-#sed -i 's/CPGF_TRANSACAO/transactions/g' $OUTPUT_FILE
-#sed -i 's/CPGF_UNIDADE_GESTORA/management_units/g' $OUTPUT_FILE
-
-#fix table differences
-#sed -i 's/INSERT INTO `transactions` /INSERT INTO `transactions` (`id`, `value`, `date`, `superior_organ_id`, `subordinated_organ_id`, `management_unit_id`, `source_id`, `person_id`, `favored_id`, `transaction_type_id`, `created_at`, `updated_at`) /g' $OUTPUT_FILE
-#sed -i 's/INSERT INTO `favored` /INSERT INTO `favored` (`id`, `name`, `masked_document`, `created_at`, `updated_at`) /g' $OUTPUT_FILE
-#sed -i 's/INSERT INTO `people` /INSERT INTO `people` (`id`, `name`, `masked_document`, `created_at`, `updated_at`) /g' $OUTPUT_FILE
-
-#insert aditional params for created_at and updated_at
-#sed -i 's/),/,NOW(),NOW()),/g' $OUTPUT_FILE
-#sed -i 's/);/,NOW(),NOW());/g' $OUTPUT_FILE
+mysqldump -u root --no-create-info $SRC_DATABASE_NAME transactions --where "id > $MAX_TRANSACTION_ID" >> $OUTPUT_FILE
 
 echo "Update data is ready at $OUTPUT_FILE"
 
@@ -73,4 +54,9 @@ mysql -u root -e 'UPDATE people set total_transactions = (SELECT SUM(value) from
 #calculate total spendings by favored
 mysql -u root -e 'UPDATE favored set total_transactions = (SELECT SUM(value) from transactions where transactions.favored_id = favored.id)' $TARGET_DATABASE_NAME
 
-#REMOVE CACHED PAGES FROM ./app-root/runtime/repo/public/
+#REMOVE CACHED PAGES (index.html, mainly) FROM ./app-root/runtime/repo/public/
+
+#UPDATING USING DUMP FROM IMPORT (FULL UPDATE):
+#sed -i 's/20170329_CPGF_2016_IMPORT/web/g' 20170329_CPGF_2016_IMPORT.sql
+#(with rhc port-forward)
+#pv 20170329_CPGF_2016_IMPORT.sql | mysql --port=54641 --host=127.0.0.1 -u user -ppassword
