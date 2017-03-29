@@ -54,7 +54,9 @@ mysql -u root -e 'UPDATE people set total_transactions = (SELECT SUM(value) from
 #calculate total spendings by favored
 mysql -u root -e 'UPDATE favored set total_transactions = (SELECT SUM(value) from transactions where transactions.favored_id = favored.id)' $TARGET_DATABASE_NAME
 
-#REMOVE CACHED PAGES (index.html, mainly) FROM ./app-root/runtime/repo/public/
+#REMOVE CACHED PAGES 
+#FROM (index.html, mainly) ./app-root/runtime/repo/public/
+#AND (ALL) ./app-root/runtime/repo/tmp/cache
 
 #UPDATING USING DUMP FROM IMPORT (FULL UPDATE):
 #sed -i 's/20170329_CPGF_2016_IMPORT/web/g' 20170329_CPGF_2016_IMPORT.sql
